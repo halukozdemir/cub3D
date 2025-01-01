@@ -44,6 +44,22 @@ t_textures *init_textures_struct(void)
     return textures;
 }
 
+// char	struct_done_checker(t_textures *textures, char *line)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	j = 0;
+// 	i = 0;
+// 	while (line[i])
+// 	{
+// 		if (!ft_strchr(textures->keys, line[i]))
+// 			return (EXIT_SUCCESS);
+// 		i++;
+// 	}
+// 	return (EXIT_FAILURE);
+// }
+
 void    fill_textures_struct(t_textures *textures, const char *file_name)
 {
 	int		fd;
