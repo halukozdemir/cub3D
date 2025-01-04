@@ -67,12 +67,13 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 	int		i;
 
 	i = 0;
-	fd = open(file_name, O_RDONLY, 0777);
+	fd = open(file_name, O_RDWR, 0777);
 	if (fd < 0)
 	{
 		perror("Harita dosyası okunamadı.\n");
 		return;
 	}
+	printf("%s",get_next_line(fd));
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		skip_whitespaces(line, &i);
@@ -121,7 +122,7 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 			if (textures->textures[4] == 0 && !skip_whitespaces(line, &i))
 			{
 				textures->textures[4] = 1;
-				textures->c = ft_strdup(line + i);
+				textures->c = ft_split(line + i, ',');
 			}
 			else
 				printf("1'den fazla C asset'i tanımlanmış. \n");
@@ -131,7 +132,7 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 			if (textures->textures[5] == 0 && !skip_whitespaces(line, &i))
 			{
 				textures->textures[5] = 1;
-				textures->f = ft_strdup(line + i);
+				textures->f = ft_split(line + i, ',');
 			}
 			else
 				printf("1'den fazla F asset'i tanımlanmış. \n");
@@ -139,12 +140,66 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 	}
 }
 
+
+void print_textures(t_textures *textures)
+{
+    if (!textures) return;
+
+    // keys
+    printf("keys: %s\n", textures->keys ? textures->keys : "NULL");
+
+    // texture paths
+    printf("NO (North): %s\n", textures->no ? textures->no : "NULL");
+    printf("SO (South): %s\n", textures->so ? textures->so : "NULL");
+    printf("WE (West): %s\n", textures->we ? textures->we : "NULL");
+    printf("EA (East): %s\n", textures->ea ? textures->ea : "NULL");
+
+    // textures array
+    printf("Textures array: ");
+    for (int i = 0; i < 6; i++)
+    {
+        printf("%d ", textures->textures[i]);
+    }
+    printf("\n");
+
+    // colors (c and f)
+    if (textures->c)
+    {
+        printf("c (Ceiling color): ");
+        for (int i = 0; textures->c[i]; i++)
+        {
+            printf("%s ", textures->c[i]);
+        }
+        printf("\n");
+    }
+    else
+    {
+        printf("c (Ceiling color): NULL\n");
+    }
+
+    if (textures->f)
+    {
+        printf("f (Floor color): ");
+        for (int i = 0; textures->f[i]; i++)
+        {
+            printf("%s ", textures->f[i]);
+        }
+        printf("\n");
+    }
+    else
+    {
+        printf("f (Floor color): NULL\n");
+    }
+}
+
 int main(int argc, char **argv)
 {
-    if (argc != 2)
-        return (0);
+    // if (argc != 2)
+    //     return (0);
     t_textures  *textures;
     textures = init_textures_struct();
+	fill_textures_struct(textures, "map.cub");
 	if (!textures)
 		return (0);
+	print_textures(textures);
 }

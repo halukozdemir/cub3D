@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
+#include <unistd.h>
+#include <stdio.h>
+
 
 char	*readline(int fd, char	*readone)
 {
