@@ -11,28 +11,35 @@ OBJS = $(SRCS:.c=.o)
 MLX_DIR = lib/minilibx
 MLX = $(MLX_DIR)/libmlx.a
 
-all: $(MLX) $(LIBFT) $(NAME)
+# Libft kaynak dosyaları
+LIBFT_SRCS = $(LIBFT_DIR)/ft_memset.c $(LIBFT_DIR)/ft_strlen.c $(LIBFT_DIR)/ft_strdup.c # Tüm dosyaları ekleyin
+LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLXFLAGS) $(LIBFT)
 
 $(MLX):
 	make -C $(MLX_DIR)
 
-$(LIBFT):
+# Libft hedefi
+$(LIBFT): $(LIBFT_OBJS)
 	make -C $(LIBFT_DIR)
-
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLXFLAGS) $(LIBFT)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
+	rm -f $(LIBFT_OBJS)
 	make -C $(MLX_DIR) clean
 	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	make -C $(MLX_DIR) clean
+	rm -f $(LIBFT)
+	make -C $(MLX_DIR) fclean
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all

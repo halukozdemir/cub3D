@@ -201,5 +201,6 @@ int main(int argc, char **argv)
 	fill_textures_struct(textures, "map.cub");
 	if (!textures)
 		return (0);
+		
 	print_textures(textures);
 }
