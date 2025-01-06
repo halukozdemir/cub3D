@@ -1,46 +1,49 @@
 CC = cc
 CFLAGS = -I./lib/libft -I/usr/include -I./lib/minilibx -O3
 MLXFLAGS = -L./lib/minilibx -lmlx -L/usr/lib -lXext -lX11 -lm -lz
-LIBFT_DIR = lib/libft
-LIBFT = $(LIBFT_DIR)/libft.a
 NAME = cub3d
 
-SRCS = main.c
+# Libft kaynak dosyalarını buraya ekledik
+LIBFT_SRCS = lib/libft/ft_strlen.c lib/libft/ft_memmove.c lib/libft/ft_strlcpy.c \
+	lib/libft/ft_strlcat.c lib/libft/ft_isalpha.c lib/libft/ft_isdigit.c \
+	lib/libft/ft_isalnum.c lib/libft/ft_isascii.c lib/libft/ft_isprint.c \
+	lib/libft/ft_memset.c lib/libft/ft_bzero.c lib/libft/ft_toupper.c \
+	lib/libft/ft_tolower.c lib/libft/ft_strchr.c lib/libft/ft_strrchr.c \
+	lib/libft/ft_strncmp.c lib/libft/ft_memchr.c lib/libft/ft_memcmp.c \
+	lib/libft/ft_strnstr.c lib/libft/ft_atoi.c lib/libft/ft_calloc.c \
+	lib/libft/ft_strdup.c lib/libft/ft_substr.c lib/libft/ft_strjoin.c \
+	lib/libft/ft_strtrim.c lib/libft/ft_split.c lib/libft/ft_itoa.c \
+	lib/libft/ft_strmapi.c lib/libft/ft_striteri.c lib/libft/ft_putchar_fd.c \
+	lib/libft/ft_putstr_fd.c lib/libft/ft_putendl_fd.c lib/libft/ft_putnbr_fd.c \
+	lib/libft/get_next_line.c lib/libft/ft_lstnew.c lib/libft/ft_lstadd_front.c \
+	lib/libft/ft_lstsize.c lib/libft/ft_lstlast.c lib/libft/ft_lstadd_back.c \
+	lib/libft/ft_lstiter.c lib/libft/ft_lstdelone.c lib/libft/ft_lstmap.c \
+	lib/libft/ft_memcpy.c lib/libft/ft_lstclear.c
+
+SRCS = main.c $(LIBFT_SRCS)
 OBJS = $(SRCS:.c=.o)
 
 MLX_DIR = lib/minilibx
 MLX = $(MLX_DIR)/libmlx.a
 
-# Libft kaynak dosyaları
-LIBFT_SRCS = $(LIBFT_DIR)/ft_memset.c $(LIBFT_DIR)/ft_strlen.c $(LIBFT_DIR)/ft_strdup.c # Tüm dosyaları ekleyin
-LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
-
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLXFLAGS) $(LIBFT)
+$(NAME): $(OBJS) $(MLX)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLXFLAGS)
 
 $(MLX):
 	make -C $(MLX_DIR)
-
-# Libft hedefi
-$(LIBFT): $(LIBFT_OBJS)
-	make -C $(LIBFT_DIR)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
-	rm -f $(LIBFT_OBJS)
 	make -C $(MLX_DIR) clean
-	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(LIBFT)
 	make -C $(MLX_DIR) fclean
-	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 

@@ -60,7 +60,37 @@ t_textures *init_textures_struct(void)
 // 	return (EXIT_FAILURE);
 // }
 
-void    fill_textures_struct(t_textures *textures, const char *file_name)
+char	fill_map_struct(t_textures *textures,int fd, const char *file_name)
+{
+	char	*line;
+	int		i;
+
+	printf("************************\n");
+	i = 0;
+	while((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+	}
+
+}
+
+char	check_textures_done(t_textures *textures)
+{
+	int	i;
+
+	i = 0;
+	while (i < 6)
+	{
+		if (textures->textures[i] == 0)
+			return (EXIT_FAILURE);
+		else
+			i++;
+	}
+	return (EXIT_SUCCESS);
+	
+}
+
+int    fill_textures_struct(t_textures *textures, const char *file_name)
 {
 	int		fd;
 	char	*line;
@@ -71,10 +101,10 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 	if (fd < 0)
 	{
 		perror("Harita dosyası okunamadı.\n");
-		return;
+		return (-1);
 	}
 	printf("%s",get_next_line(fd));
-	while ((line = get_next_line(fd)) != NULL)
+	while ((line = get_next_line(fd)) != NULL && check_textures_done(textures))
 	{
 		skip_whitespaces(line, &i);
 		if (ft_strncmp(line, "NO ", i + 3) == 0)
@@ -82,7 +112,7 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 			if (textures->textures[0] == 0 && !skip_whitespaces(line, &i))
 			{
 				textures->textures[0] = 1;
-				textures->no = ft_strdup(line + i);
+				textures->no = ft_strdup(line + i + 3);
 			}
 			else
 				printf("1'den fazla NO asset'i tanımlanmış. \n");
@@ -92,7 +122,7 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 			if (textures->textures[1] == 0 && !skip_whitespaces(line, &i))
 			{
 				textures->textures[1] = 1;
-				textures->so = ft_strdup(line + i);
+				textures->so = ft_strdup(line + i + 3);
 			}
 			else
 				printf("1'den fazla SO  asset'i tanımlanmış. \n");
@@ -102,7 +132,7 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 			if (textures->textures[2] == 0 && !skip_whitespaces(line, &i))
 			{
 				textures->textures[2] = 1;
-				textures->we = ft_strdup(line + i);
+				textures->we = ft_strdup(line + i + 3);
 			}
 			else
 				printf("1'den fazla WE asset'i tanımlanmış. \n");
@@ -112,7 +142,7 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 			if (textures->textures[3] == 0 && !skip_whitespaces(line, &i))
 			{
 				textures->textures[3] = 1;
-				textures->ea = ft_strdup(line + i);
+				textures->ea = ft_strdup(line + i + 3);
 			}
 			else
 				printf("1'den fazla EA asset'i tanımlanmış. \n");
@@ -122,7 +152,7 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 			if (textures->textures[4] == 0 && !skip_whitespaces(line, &i))
 			{
 				textures->textures[4] = 1;
-				textures->c = ft_split(line + i, ',');
+				textures->c = ft_split(line + i + 2, ',');
 			}
 			else
 				printf("1'den fazla C asset'i tanımlanmış. \n");
@@ -132,12 +162,14 @@ void    fill_textures_struct(t_textures *textures, const char *file_name)
 			if (textures->textures[5] == 0 && !skip_whitespaces(line, &i))
 			{
 				textures->textures[5] = 1;
-				textures->f = ft_split(line + i, ',');
+				textures->f = ft_split(line + i + 2, ',');
 			}
 			else
 				printf("1'den fazla F asset'i tanımlanmış. \n");
 		}
+		free(line);
 	}
+	return (fd);
 }
 
 
@@ -149,10 +181,10 @@ void print_textures(t_textures *textures)
     printf("keys: %s\n", textures->keys ? textures->keys : "NULL");
 
     // texture paths
-    printf("NO (North): %s\n", textures->no ? textures->no : "NULL");
-    printf("SO (South): %s\n", textures->so ? textures->so : "NULL");
-    printf("WE (West): %s\n", textures->we ? textures->we : "NULL");
-    printf("EA (East): %s\n", textures->ea ? textures->ea : "NULL");
+    printf("NO (North):%s\n", textures->no ? textures->no : "NULL");
+    printf("SO (South):%s\n", textures->so ? textures->so : "NULL");
+    printf("WE (West):%s\n", textures->we ? textures->we : "NULL");
+    printf("EA (East):%s\n", textures->ea ? textures->ea : "NULL");
 
     // textures array
     printf("Textures array: ");
@@ -197,10 +229,12 @@ int main(int argc, char **argv)
     // if (argc != 2)
     //     return (0);
     t_textures  *textures;
+	int			fd;
     textures = init_textures_struct();
-	fill_textures_struct(textures, "map.cub");
+	fd = fill_textures_struct(textures, "maps/map.cub");
 	if (!textures)
 		return (0);
 		
 	print_textures(textures);
+	fill_map_struct(textures, fd, "maps/map.cub");
 }

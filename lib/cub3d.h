@@ -12,6 +12,11 @@
 #include <stdlib.h> //kaldırmayı dene
 #include <math.h>
 
+typedef struct s_map
+{
+	char	**map;
+}				t_map;
+
 typedef struct s_textures
 {
 	char	*keys;
