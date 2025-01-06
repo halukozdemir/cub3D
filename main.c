@@ -60,7 +60,21 @@ t_textures *init_textures_struct(void)
 // 	return (EXIT_FAILURE);
 // }
 
-char	fill_map_struct(t_textures *textures,int fd, const char *file_name)
+char	ft_find_in_str(char *src, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		if(ft_strchr(str, src[i]))
+			return (EXIT_FAILURE);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+char	fill_map_struct(t_textures *textures, int fd, const char *file_name)
 {
 	char	*line;
 	int		i;
@@ -69,7 +83,8 @@ char	fill_map_struct(t_textures *textures,int fd, const char *file_name)
 	i = 0;
 	while((line = get_next_line(fd)) != NULL)
 	{
-		printf("%s", line);
+		if (ft_find_in_str(line, "1 0SNWE\n"))
+			printf("%s", line);
 	}
 
 }
