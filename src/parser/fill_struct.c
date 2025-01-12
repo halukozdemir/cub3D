@@ -25,9 +25,9 @@ int    fill_textures_struct(t_textures *textures, const char *file_name)
 		perror("Harita dosyası okunamadı.\n");
 		return (-1);
 	}
-	printf("%s",get_next_line(fd));
 	while ((line = get_next_line(fd)) != NULL && check_textures_done(textures))
 	{
+		i = 0;
 		skip_whitespaces(line, &i);
 		if (ft_strncmp(line, "NO ", i + 3) == 0)
 		{
@@ -89,8 +89,8 @@ int    fill_textures_struct(t_textures *textures, const char *file_name)
 			else
 				printf("1'den fazla F asset'i tanımlanmış. \n");
 		}
-		else if (ft_find_in_str(line, textures->keys)) //hatalı
-			break;
+		// else if (ft_find_in_str(line, textures->keys)) //hatalı
+		// 	break;
 		free(line);
 	}
 	return (fd);

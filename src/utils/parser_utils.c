@@ -43,8 +43,8 @@ char	ft_find_in_str(char *line, char *str)
 
 char	skip_whitespaces(char *str, int *i)
 {
-	while(str[*i] == ' ' || (str[*i] >= 9 && str[*i] <= 13))
-			*i++;
+	while(str[*i] && (str[*i] == ' ' || (str[*i] >= 9 && str[*i] <= 13)))
+			(*i)++;
 	return (EXIT_SUCCESS);
 }
 
