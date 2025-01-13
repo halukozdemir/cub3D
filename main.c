@@ -55,14 +55,14 @@ int main(int argc, char **argv)
 {
     // if (argc != 2)
     //     return (0);
-    t_textures  *textures;
+    t_main      *main;
 	int			fd;
-    textures = init_textures_struct();
-	fd = fill_textures_struct(textures, "maps/map.cub");
-	if (!textures)
+
+    main = init_all();
+	if (!main->textures)
 		return (0);
-		
-	print_textures(textures);
-	if (fill_map_struct(textures, fd, "maps/map.cub"))
+	fd = fill_textures_struct(main->textures, "maps/map.cub");
+	print_textures(main->textures);
+	if (fill_map_struct(main->textures, fd, "maps/map.cub"))
 		return (0);
 }

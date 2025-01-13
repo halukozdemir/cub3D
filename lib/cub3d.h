@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/07 17:29:16 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:17:17 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef struct s_textures
 	char	**f;
 }               t_textures;
 
+typedef struct s_main
+{
+	t_map		*map;
+	t_textures	*textures;
+}				t_main;
+
 //parser_utils.c
 char	ft_find_in_str(char *line, char *str);
 char	skip_whitespaces(char *str, int *i);
@@ -54,7 +60,8 @@ char	fill_map_struct(t_textures *textures, int fd, const char *file_name);
 
 
 //init.c
-t_textures *init_textures_struct(void);
+t_textures	*init_textures_struct(void);
+t_main		*init_all();
 
 
 #endif

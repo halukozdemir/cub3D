@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/11 19:06:26 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/13 21:06:08 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int    fill_textures_struct(t_textures *textures, const char *file_name)
 			else
 				printf("1'den fazla F asset'i tanımlanmış. \n");
 		}
-		// else if (ft_find_in_str(line, textures->keys)) //hatalı
-		// 	break;
+		else if (!ft_find_in_str(line, textures->keys)) //hatalı
+			break;
 		free(line);
 	}
 	return (fd);
@@ -111,7 +111,10 @@ char	fill_map_struct(t_textures *textures, int fd, const char *file_name)
 	while((line = get_next_line(fd)) != NULL)
 	{
 		if (ft_find_in_str(line, "1 0SNWE\n"))
-			printf("%s", line);
+		{
+			
+			// printf("%s", line);
+		}
 	}
 	return (EXIT_SUCCESS);
 }
