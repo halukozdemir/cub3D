@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/17 18:54:05 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:43:01 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ int    fill_textures_struct(t_textures *textures, const char *file_name)
 	return (fd);
 }
 
-char	fill_map_struct(t_textures *textures, int fd, const char *file_name)
+char	fill_map_struct(t_main *main, int fd, const char *file_name)
 {
 	char	*line;
 	int		i;
 
 	printf("************************\n");
 	i = 0;
-	if (check_textures_done(textures))
+	if (check_textures_done(main->textures))
 	{
 		printf("Hatalı map dosyası girdiniz.\n");
 		return (EXIT_FAILURE);
@@ -112,7 +112,8 @@ char	fill_map_struct(t_textures *textures, int fd, const char *file_name)
 	{
 		if (ft_find_in_str(line, "1 0SNWE\n"))
 		{
-			printf("%s", line);
+			main->map->map = ft_realloc(main->map->map, line);
+			i++;
 		}
 		else
 		{

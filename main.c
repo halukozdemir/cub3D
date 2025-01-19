@@ -51,6 +51,18 @@ void print_textures(t_textures *textures)
     }
 }
 
+void print_map(t_map *map)
+{
+    int i;
+
+    i = 0;
+    while (map->map[i])
+    {
+        printf("%s", map->map[i]);
+        i++;
+    }
+}
+
 int main(int argc, char **argv)
 {
     // if (argc != 2)
@@ -62,7 +74,8 @@ int main(int argc, char **argv)
 	if (!main->textures)
 		return (0);
 	fd = fill_textures_struct(main->textures, "maps/map.cub");
-	print_textures(main->textures);
-	if (fill_map_struct(main->textures, fd, "maps/map.cub"))
+	print_textures(main->textures);//yazdırma fonksiyonu
+	if (fill_map_struct(main, fd, "maps/map.cub"))
 		return (0);
+    print_map(main->map);//yazdırma fonksiyonu
 }

@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:23:22 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/11 17:50:16 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:18:28 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	check_textures_done(t_textures *textures)
 		else
 			i++;
 	}
+	if (cf_count_checker(textures))
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 	
 }

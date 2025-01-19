@@ -1,6 +1,6 @@
 #include "../../lib/cub3d.h"
 
-char    cf_checker(t_textures *textures)
+char    cf_count_checker(t_textures *textures)
 {
     int count;
 
@@ -15,4 +15,33 @@ char    cf_checker(t_textures *textures)
     if (count != 3)
         return (EXIT_FAILURE);
     return (EXIT_SUCCESS);
+}
+
+char	**ft_realloc(char **array, char *new_element)
+{
+	char	**new_array;
+	int		size;
+
+	if (!array)
+	{
+		new_array = ft_calloc(2, sizeof(char *));
+		if (!new_array)
+			return (NULL);
+		new_array[0] = ft_strdup(new_element);
+		return (new_array);
+	}
+	size = 0;
+	while (array[size])
+		size++;
+	new_array = ft_calloc(size + 2, sizeof(char *));
+	if (!new_array)
+		return (NULL);
+	size = 0;
+	while (array[size])
+	{
+		new_array[size] = array[size];
+		size++;
+	}
+	new_array[size] = ft_strdup(new_element);
+	return (free(array), new_array);
 }
