@@ -74,8 +74,9 @@ int main(int argc, char **argv)
 	if (!main->textures)
 		return (0);
 	fd = fill_textures_struct(main->textures, "maps/map.cub");
-	print_textures(main->textures);//yazdırma fonksiyonu
+	// print_textures(main->textures);//yazdırma fonksiyonu
 	if (fill_map_struct(main, fd, "maps/map.cub"))
 		return (0);
-    print_map(main->map);//yazdırma fonksiyonu
+    // print_map(main->map);//yazdırma fonksiyonu
+    flood_fill(main);
 }

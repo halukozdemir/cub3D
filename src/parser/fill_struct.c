@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/19 15:43:01 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:42:23 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ char	fill_map_struct(t_main *main, int fd, const char *file_name)
 	char	*line;
 	int		i;
 
-	printf("************************\n");
 	i = 0;
 	if (check_textures_done(main->textures))
 	{
