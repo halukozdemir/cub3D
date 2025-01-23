@@ -45,3 +45,14 @@ char	**ft_realloc(char **array, char *new_element)
 	new_array[size] = ft_strdup(new_element);
 	return (free(array), new_array);
 }
+
+char	ft_is_empty_line(char *line)
+{
+	while (*line)
+	{
+		if (!ft_strchr(" \t\n\v\f", *line))
+			return (EXIT_FAILURE);
+		line++;
+	}
+	return (EXIT_SUCCESS);
+}

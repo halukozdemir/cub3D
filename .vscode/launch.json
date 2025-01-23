@@ -4,16 +4,34 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "type": "bashdb",
+            "name": "(gdb) Başlat",
+            "type": "cppdbg",
             "request": "launch",
-            "name": "Bash-Debug (hardcoded script name)",
-            "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/path/to/script.sh",
-            "args": []
+            "program": "${workspaceFolder}/cub3d",
+            "args": [
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "gdb için düzgün yazdırmayı etkinleştir",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Ayrıştırılmış Kod Varyantını Intel olarak ayarla",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
         }
+    
         
+       
 
     ]
 }

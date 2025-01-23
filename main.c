@@ -51,16 +51,17 @@ void print_textures(t_textures *textures)
     }
 }
 
-void print_map(t_map *map)
+void print_map(char **map)
 {
     int i;
 
     i = 0;
-    while (map->map[i])
+    while (map[i])
     {
-        printf("%s", map->map[i]);
+        printf("%s",map[i]);
         i++;
     }
+    printf("\n");
 }
 
 int main(int argc, char **argv)

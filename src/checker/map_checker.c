@@ -5,21 +5,7 @@ static void	flf_check(t_map *map);
 static char	**ft_map_dup(char **src);
 static void	player_pos(t_main *main);
 static void	free_map(char **map, int map_y);
-static void print_map(char **map, int map_y, int map_x);
-
-void print_map(char **map, int map_y, int map_x)
-{
-    int i, j;
-
-    for (i = 0; i < map_y; i++)  // Harita satırlarını gez
-    {
-        for (j = 0; j < map_x; j++)  // Her satırdaki sütunları gez
-        {
-            putchar(map[i][j]);  // Haritadaki her karakteri yazdır
-        }
-        putchar('\n');  // Her satır sonunda yeni satıra geç
-    }
-}
+void print_map(t_map *map);
 
 
 void	free_map(char **map, int map_y)
@@ -65,13 +51,15 @@ void	player_pos(t_main *main)
 void	flood_fill(t_main *main)
 {
 	main->map->copy_map = ft_map_dup(main->map->map); // Haritayı kopyala
+	print_map(main->map->copy_map);
+
+	// Boyalı haritayı yazdır
 	player_pos(main);  // Oyuncunun başlangıç konumunu bul
 	f_fill(main->map, main->player_pos.y, main->player_pos.x);  // Flood fill işlemi
 
-	// Boyalı haritayı yazdır
 	printf("Boyalı Harita:\n");  
-	print_map(main->map->copy_map, main->map->map_y, main->map->map_x);
-
+	print_map(main->map->copy_map);
+	// printf("sdjhgısd\n");
 	// Harita kontrolü
 	flf_check(main->map);
 	
@@ -84,21 +72,27 @@ static void	f_fill(t_map *map, int y, int x)
 {
 	if (y < 0 || x < 0)
 		return ;
-	if (y >= map->map_y || x >= map->map_x)
+	// printf("x: %d, y: %d\n", x, y);
+	// // printf("%d\n", map->row);
+	// printf("copy_map[x] : %d\n",ft_strlen(map->copy_map[x]));
+	// printf("y: %d, copy_map[y]: %d\n", x, ft_strlen(map->copy_map[y]));
+	if (x > (int)ft_strlen(map->copy_map[x]) || y > map->row)
+	{
 		return ;
-	if (map->copy_map[y][x] == '1' || map->copy_map[y][x] == 'F' || map->copy_map[y][x] == ' ') // Boşlukları işaretleme
+	}
+	if (map->copy_map[x][y] == 'F' || map->copy_map[x][y] == ' ') // Boşlukları işaretleme
 		return ;
-
 	// İşaretleme
-	map->copy_map[y][x] = 'F'; 
-
+	map->copy_map[x][y] = 'F'; 
+	print_map(map->copy_map);
+	// printf("sdgfsdf\n");
 	// Rekürsif olarak dört yöne işaretleme yap
 	f_fill(map, y - 1, x);  // Yukarı
+	// printf("dsjkdbskjbdkljdbs\n");
 	f_fill(map, y + 1, x);  // Aşağı
 	f_fill(map, y, x - 1);  // Sol
 	f_fill(map, y, x + 1);  // Sağ
 }
-
 
 static void	flf_check(t_map *map)
 {

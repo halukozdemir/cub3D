@@ -1,4 +1,4 @@
-CC = cc
+CC = cc -g
 CFLAGS = -I./lib/libft -I/usr/include -I./lib/minilibx -O3
 MLXFLAGS = -L./lib/minilibx -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 NAME = cub3d

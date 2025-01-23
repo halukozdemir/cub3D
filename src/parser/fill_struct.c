@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/19 16:42:23 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:46:15 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int    fill_textures_struct(t_textures *textures, const char *file_name)
 			else
 				printf("1'den fazla F asset'i tanımlanmış. \n");
 		}
-		else if (!ft_find_in_str(line, textures->keys)) //hatalı
+		else if (!ft_find_in_str(line, textures->keys)) //hatalı //değilmiş
 			break;
 		free(line);
 	}
@@ -107,10 +107,18 @@ char	fill_map_struct(t_main *main, int fd, const char *file_name)
 		printf("Hatalı map dosyası girdiniz.\n");
 		return (EXIT_FAILURE);
 	}
-	while((line = get_next_line(fd)) != NULL)
+	while (line = get_next_line(fd))
+		if (*line != '\n')
+			break;
+	// printf("line: %s\n", line);
+	while(line)
 	{
+		if (!ft_is_empty_line(line))
+			break;
 		if (ft_find_in_str(line, "1 0SNWE\n"))
 		{
+			if (main->map->map_max_x < ft_strlen(line))
+				main->map->map_max_x = ft_strlen(line) - 1;
 			main->map->map = ft_realloc(main->map->map, line);
 			i++;
 		}
@@ -119,6 +127,12 @@ char	fill_map_struct(t_main *main, int fd, const char *file_name)
 			printf("HATA VAR \n");
 			break;
 		}
+		free(line);
+		line = get_next_line(fd);
+		// if (*line != '\n')
+		// 	break;
 	}
+	// main->map->map_max_y = i;
+	// printf("en uzun satır: %d, en uzun sütun: %d\n", main->map->map_max_x, main->map->map_max_y);
 	return (EXIT_SUCCESS);
 }

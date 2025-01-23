@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/19 17:51:56 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:42:57 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ typedef struct s_map
 {
 	char	**map;
 	char	**copy_map;
-	int		map_x;
-	int		map_y;
+	int		map_max_x;
+	int		map_max_y;
+
 }				t_map;
 
 typedef struct s_textures
@@ -77,6 +78,7 @@ t_map		*init_map_struct(void);
 //parser_utils2.c
 char    cf_count_checker(t_textures *textures);
 char	**ft_realloc(char **array, char *new_element);
+char	ft_is_empty_line(char *line);
 
 //map_checker.c
 void	flood_fill(t_main *main);
