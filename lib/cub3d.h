@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/23 19:29:29 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/25 20:12:01 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <stdlib.h> //kaldırmayı dene
 #include <math.h>
 #include <stdbool.h> 
+#include <unistd.h>
 
 typedef struct s_map
 {
@@ -88,5 +89,7 @@ void	flood_fill(t_main *main);
 
 //image_checker.c
 
-
+//clean_up.c
+void	free_map(char **map, int map_y);
+void free_map_memory(t_map *map, int i);//silinebilir
 #endif

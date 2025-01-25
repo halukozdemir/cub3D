@@ -79,6 +79,6 @@ int main(int argc, char **argv)
 		return (0);
     if (fill_map_struct(main, "maps/map.cub"))
         return (0);
-    print_map(main->map->map);//yazdırma fonksiyonu
+    // print_map(main->map->map);//yazdırma fonksiyonu
     flood_fill(main);
 }
