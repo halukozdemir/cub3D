@@ -52,7 +52,7 @@ void	flood_fill(t_main *main)
 {
 	main->map->copy_map = ft_map_dup(main->map->map); // Haritayı kopyala
 	print_map(main->map->copy_map);
-
+	return ;
 	// Boyalı haritayı yazdır
 	player_pos(main);  // Oyuncunun başlangıç konumunu bul
 	f_fill(main->map, main->player_pos.y, main->player_pos.x);  // Flood fill işlemi
