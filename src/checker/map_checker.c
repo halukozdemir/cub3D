@@ -5,7 +5,7 @@ static void	flf_check(t_map *map);
 static char	**ft_map_dup(char **src);
 static void	player_pos(t_main *main);
 static void	free_map(char **map, int map_y);
-void print_map(t_map *map);
+void print_map(char **map);
 
 
 void	free_map(char **map, int map_y)
@@ -64,7 +64,7 @@ void	flood_fill(t_main *main)
 	flf_check(main->map);
 	
 	// Hafızayı serbest bırak
-	free_map(main->map->copy_map, main->map->map_y);
+	free_map(main->map->copy_map, main->map->map_max_y);
 }
 
 
@@ -76,7 +76,7 @@ static void	f_fill(t_map *map, int y, int x)
 	// // printf("%d\n", map->row);
 	// printf("copy_map[x] : %d\n",ft_strlen(map->copy_map[x]));
 	// printf("y: %d, copy_map[y]: %d\n", x, ft_strlen(map->copy_map[y]));
-	if (x > (int)ft_strlen(map->copy_map[x]) || y > map->row)
+	if (x > (int)ft_strlen(map->copy_map[x]) || y > map->map_max_y)
 	{
 		return ;
 	}
@@ -109,7 +109,7 @@ static void	flf_check(t_map *map)
 			if (map->copy_map[i][j] == '1')
 			{
 				printf("Error: Invalid map.\n");
-				free_map(map->map, map->map_y);
+				free_map(map->map, map->map_max_y);
 				exit(1);
 			}
 			j++;

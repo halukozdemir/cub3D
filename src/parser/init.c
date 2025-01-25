@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:09 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/19 15:45:20 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:56:48 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_main    *init_all()
 {
     t_main  *main;
 
-    main = malloc((t_main *)sizeof(t_main));
+    main = malloc(sizeof(t_main));
     if (!main)
         return (NULL);
     main->textures = init_textures_struct();
