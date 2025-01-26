@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/25 19:38:23 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/26 18:17:41 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int    fill_textures_struct(t_textures *textures, const char *file_name)
 	return (fd);
 }
 
-char	get_map_size(t_main *main, int fd, const char *file_name)
+char	get_map_size(t_main *main, int *fd, const char *file_name)
 {
 	char	*line;
 	int		i;
@@ -108,10 +108,9 @@ char	get_map_size(t_main *main, int fd, const char *file_name)
 		printf("Hatalı map dosyası girdiniz.\n");
 		return (EXIT_FAILURE);
 	}
-	while ((line = get_next_line(fd)))
+	while ((line = get_next_line(*fd)))
 		if (*line != '\n')
 			break;
-	// printf("line: %s\n", line);
 	while(line)
 	{
 		if (!ft_is_empty_line(line))
@@ -120,7 +119,6 @@ char	get_map_size(t_main *main, int fd, const char *file_name)
 		{
 			if (main->map->map_max_x < ft_strlen(line))
 				main->map->map_max_x = ft_strlen(line);
-			// main->map->map = ft_realloc(main->map->map, line);
 			i++;
 		}
 		else
@@ -129,13 +127,12 @@ char	get_map_size(t_main *main, int fd, const char *file_name)
 			break;
 		}
 		free(line);
-		line = get_next_line(fd);
-		// if (*line != '\n')
-		// 	break;
+		line = get_next_line(*fd);
+
 	}
 	main->map->map_max_y = i;
 	printf("en uzun satır: %d, en uzun sütun: %d\n", main->map->map_max_x, main->map->map_max_y);
-	close(fd);
+	close(*fd);
 	return (EXIT_SUCCESS);
 }
 
@@ -159,44 +156,50 @@ char	init_map(t_map *map)
 	    }
 	    i++;
 	}
-	
 	i = 0;
 	while (i < map->map_max_y + 2)  // Satır sayısı kadar
 	{
 	    j = 0;
 	    while (j < map->map_max_x + 2)  // Sütun sayısı kadar
 	    {
-	        map->map[i][j] = 'B';  // Haritayı 'B' ile doldur
+			// if (map->map[i][j] != ' ')
+	        	map->map[i][j] = 'B';  // Haritayı 'B' ile doldur
 	        j++;
 	    }
 	    map->map[i][j] = '\0';  // Satır sonuna null terminator ekle
 	    i++;
 	}
+	
 	return (EXIT_SUCCESS);
 }
 
 
-char	fill_map_struct(t_main *main, const char *file_name)
+char	fill_map_struct(t_main *main, int *fd, const char *file_name)
 {
 	char	*line;
-	int		fd;
 	int		i;
 
-	fd = open(file_name, O_RDWR);
+	*fd = open(file_name, O_RDWR);
+	// printf("%s\n", get_next_line(*fd));
+	// printf("%s\n", get_next_line(*fd));
+	// printf("%s\n", get_next_line(*fd));
+	// printf("%s\n", get_next_line(*fd));
+	// printf("%s\n", get_next_line(*fd));
+
 	if (fd < 0)
 		return (EXIT_FAILURE);
 	if (init_map(main->map) == EXIT_FAILURE)
 	{
-		close(fd);
+		close(*fd);
 		return (EXIT_FAILURE);
 	}
-	while ((line = get_next_line(fd)) != NULL)
+	while ((line = get_next_line(*fd)) != NULL)
 	{
 		if (ft_find_in_str(line, "1 0SNWE\n") || *line == '\n') //hatalı //değilmiş
 			break;
 	}
 	i = 0;
-	while ((line = get_next_line(fd)))
+	while ((line = get_next_line(*fd)))
 	{
 		if (*line == '\n')
 		{
@@ -213,6 +216,6 @@ char	fill_map_struct(t_main *main, const char *file_name)
 		if (++i >= main->map->map_max_y)
 			break;
 	}
-	close(fd);
+	close(*fd);
 	return (EXIT_SUCCESS);
 }

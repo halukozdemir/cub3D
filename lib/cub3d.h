@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/25 20:12:01 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/26 18:16:38 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ char	check_fill_done(t_textures *textures);
 
 //fill_struct.c
 int		fill_textures_struct(t_textures *textures, const char *file_name);
-char	get_map_size(t_main *main, int fd, const char *file_name);
-char	fill_map_struct(t_main *main, const char *file_name);
+char	get_map_size(t_main *main, int *d, const char *file_name);
+char	fill_map_struct(t_main *main, int *fd, const char *file_name);
 
 
 //init.c

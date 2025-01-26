@@ -46,7 +46,7 @@ static void	f_fill(t_map *map, int y, int x)
 		return ;
 	if (y >= map->map_max_y + 2 || x >= map->map_max_x + 2)
 		return ;
-	if (map->copy_map[y][x] == 'F' || map->copy_map[y][x] == ' ')
+	if (map->copy_map[y][x] == 'F' || map->copy_map[y][x] == ' ' || map->copy_map[y][x] == 'B')
 		return ;
 	map->copy_map[y][x] = 'F';
 	f_fill(map, y - 1, x);
