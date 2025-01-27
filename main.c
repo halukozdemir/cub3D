@@ -58,7 +58,7 @@ void print_map(char **map)
     i = 0;
     while (map[i])
     {
-        printf("%s\n",map[i]);
+        printf("%s\n", map[i]);
         i++;
     }
 }
@@ -81,4 +81,5 @@ int main(int argc, char **argv)
         return (0);
     // print_map(main->map->map);//yazdırma fonksiyonu
     flood_fill(main);
+    free_all(main);
 }

@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/26 18:16:38 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/27 19:31:36 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ void	flood_fill(t_main *main);
 //image_checker.c
 
 //clean_up.c
-void	free_map(char **map, int map_y);
-void free_map_memory(t_map *map, int i);//silinebilir
+void	free_map(t_map *map);
+void free_textures(t_textures *textures);
+void    free_all(t_main *main);
+void free_copy_map(t_map *map);
+
+void print_map(char **map);
+
 #endif

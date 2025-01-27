@@ -1,7 +1,7 @@
 #include "../../lib/cub3d.h"
 
 static void	f_fill(t_map *map, int y, int x);
-static void	flf_check(t_map *map);
+static void	flf_check(t_main *main);
 static char	**ft_map_dup(char **src);
 
 void	player_pos(t_main *main)
@@ -30,14 +30,10 @@ void	player_pos(t_main *main)
 void	flood_fill(t_main *game)
 {
 	game->map->copy_map = ft_map_dup(game->map->map);
-	printf("ilk harita: \n");
-	print_map(game->map->map);
 	player_pos(game);
 	f_fill(game->map, game->player_pos.y, game->player_pos.x);
-	flf_check(game->map);
-	printf("boyalı harita: \n");
-	print_map(game->map->copy_map);
-	free_map(game->map->copy_map, game->map->map_max_y);
+	flf_check(game);
+	free_copy_map(game->map);
 }
 
 static void	f_fill(t_map *map, int y, int x)
@@ -55,21 +51,21 @@ static void	f_fill(t_map *map, int y, int x)
 	f_fill(map, y, x + 1);
 }
 
-static void	flf_check(t_map *map)
+static void	flf_check(t_main *main)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map->copy_map[i])
+	while (main->map->copy_map[i])
 	{
 		j = 0;
-		while (map->copy_map[i][j])
+		while (main->map->copy_map[i][j])
 		{
-			if (ft_strchr("1", map->copy_map[i][j]))
+			if (ft_strchr("1", main->map->copy_map[i][j]))
 			{
-				write(2, "Error: Invalid map.\n", 21);
-				free_map(map->map, map->map_max_y);
+				printf("Error: Invalid map.\n");
+				free_all(main);
 				exit(1);
 			}
 			j++;

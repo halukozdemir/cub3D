@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:09 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/23 17:56:48 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:40:57 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_map   *init_map_struct(void)
 {
     t_map   *map;
 
-    map = (t_map *)malloc(sizeof(t_map));
+    map = (t_map *)ft_calloc(sizeof(t_map),1);
     if (!map)
         return (NULL);
     return (map);

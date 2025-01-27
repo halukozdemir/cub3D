@@ -6,14 +6,14 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 18:31:56 by halozdem          #+#    #+#             */
-/*   Updated: 2023/12/22 18:18:13 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:25:38 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1
 #endif
 # include "stdlib.h"
 
