@@ -1,5 +1,5 @@
 CC = cc -g
-CFLAGS = -I./lib/libft -I/usr/include -I./lib/minilibx -O3 #-fsanitize=address -g
+CFLAGS = -I./lib/libft -I/usr/include -I./lib/minilibx -O3 -fsanitize=address -g
 MLXFLAGS = -L./lib/minilibx -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 NAME = cub3d
 

@@ -31,7 +31,11 @@ void	flood_fill(t_main *game)
 {
 	game->map->copy_map = ft_map_dup(game->map->map);
 	player_pos(game);
+	// printf("ilk map: \n");
+	// print_map(game->map->copy_map);
 	f_fill(game->map, game->player_pos.y, game->player_pos.x);
+	// printf("boyalı map: \n");
+	// print_map(game->map->copy_map);
 	flf_check(game);
 	free_copy_map(game->map);
 }
@@ -62,7 +66,7 @@ static void	flf_check(t_main *main)
 		j = 0;
 		while (main->map->copy_map[i][j])
 		{
-			if (ft_strchr("1", main->map->copy_map[i][j]))
+			if (ft_strchr("1", main->map->copy_map[i][j]) || ft_strchr("0", main->map->copy_map[i][j]))
 			{
 				printf("Error: Invalid map.\n");
 				free_all(main);

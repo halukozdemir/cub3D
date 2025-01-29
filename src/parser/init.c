@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:09 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/27 17:40:57 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:01:00 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_textures *init_textures_struct(void)
     t_textures *textures;
     int         i;
 
-    i = 0;
     textures = (t_textures *)malloc(sizeof(t_textures));
     if (!textures)
         return (NULL);
@@ -27,9 +26,16 @@ t_textures *init_textures_struct(void)
     textures->ea = NULL;
     textures->c = NULL;
     textures->f = NULL;
-	textures->keys = "NSWEACF";
-    while (i < 6)
-        textures->textures[i++] = 0;
+    textures->textures = malloc(sizeof(int) * 6);
+    if (!textures->textures)
+    {
+        free(textures);
+        return (NULL);
+    }
+    i = -1;
+    while (++i < 6)
+        textures->textures[i] = 0;
+    textures->keys = "NSWEACF";
     return textures;
 }
 

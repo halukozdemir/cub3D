@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/27 19:31:36 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:23:27 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_textures
 	char	*so;
 	char	*we;
 	char	*ea;
-	int		textures[6];
+	int		*textures;
 	char	**c;
 	char	**f;
 }               t_textures;

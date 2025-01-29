@@ -73,7 +73,11 @@ int main(int argc, char **argv)
     main = init_all();
 	if (!main->textures)
 		return (0);
-	fd = fill_textures_struct(main->textures, "maps/map.cub");
+	if (fill_textures_struct(main->textures, "maps/map.cub"))
+    {
+        free_all(main);
+        return (0);
+    }
 	// print_textures(main->textures);//yazdırma fonksiyonu
 	if (get_map_size(main, &fd, "maps/map.cub"))
 		return (0);
