@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/28 17:19:08 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/08 16:55:32 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,10 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
         }
         free(line);
     }
-    close(fd);
+    free(line);
+    // close(fd);
 
-    return (0);
+    return (fd);
 }
 
 char get_map_size(t_main *main, int *fd, const char *file_name)
@@ -136,17 +137,29 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
     int     i;
 
     i = 1;
-    if (!check_textures_done(main->textures)) // Bu kontrolün doğru olduğundan emin olun
+    int j = 0;
+    while (j < 6 && main->textures->textures[j])
+    {
+        printf("***textures[%d]: %d\n", j, main->textures->textures[j]);
+        j++;
+    }
+    if (check_textures_done(main->textures)) // Bu kontrolün doğru olduğundan emin olun
     {
         printf("Hatalı map dosyası girdiniz.\n");
         return (EXIT_FAILURE);
     }
+    char *line2;
     while ((line = get_next_line(*fd)))
     {
-        if (*line != '\n')
+        printf("line %s\n",line);
+        if (*(line2 = ft_strtrim(line, " ")) != '\n')
             break;
         free(line);
+        free(line2);
     }
+    if (line2)
+        free(line2);
+    printf("line %s\n",line);
     while(line)
     {
         if (ft_strchr(line, '\n'))
@@ -158,6 +171,7 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
         free(line);
         line = get_next_line(*fd);
     }
+    free(line);
     main->map->map_max_y = i;
     printf("en uzun satır: %d, en uzun sütun: %d\n", main->map->map_max_x, main->map->map_max_y);
     close(*fd);
@@ -212,6 +226,7 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
     }
     while ((line = get_next_line(*fd)) != NULL)
     {
+            
         if (ft_find_in_str(line, "1 0SNWE\n") || *line == '\n')
         {
             free(line);

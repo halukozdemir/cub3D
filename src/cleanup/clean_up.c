@@ -21,16 +21,16 @@ void free_map(t_map *map)
     if (!map)
         return;
     i = 0;
-    if (!map->map)
+    if ((map->map))
     {
         while (map->map[i])
         {
             free(map->map[i]);
             i++;
         }
-    }
     free(map->map);
     map->map = NULL;
+    }
     free(map);
     map = NULL;
 }
@@ -88,7 +88,12 @@ void free_textures(t_textures *textures)
         free(textures->f);
         textures->f = NULL;
     }
-    free(textures);
+    if (textures->keys)
+        free(textures->keys);
+    if (textures->textures)
+        free(textures->textures);
+    if (textures)
+        free(textures);
     textures = NULL;
 }
 void    free_all(t_main *main)
@@ -107,6 +112,5 @@ void    free_all(t_main *main)
         free_map(main->map);
         main->map = NULL;
     }
-
     free(main);
 }

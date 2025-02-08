@@ -3,7 +3,6 @@
 char    cf_count_checker(t_textures *textures)
 {
     int count;
-
     count = 0;
     while (textures->c[count])
         count++;

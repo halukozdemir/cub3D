@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:23:22 by halozdem          #+#    #+#             */
-/*   Updated: 2025/01/28 17:20:48 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/08 16:36:19 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ char	check_textures_done(t_textures *textures)
 	while (i < 6)
 	{
 		if (textures->textures[i] == 0)
-		{
-			// printf("i: %d, textures[i]: %d\n", i, main->textures->textures[i]);
 			return (EXIT_FAILURE);
-		}
 		else
 			i++;
 	}
