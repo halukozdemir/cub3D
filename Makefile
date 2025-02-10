@@ -20,7 +20,7 @@ LIBFT_SRCS = lib/libft/ft_strlen.c lib/libft/ft_memmove.c lib/libft/ft_strlcpy.c
 	lib/libft/ft_lstiter.c lib/libft/ft_lstdelone.c lib/libft/ft_lstmap.c \
 	lib/libft/ft_memcpy.c lib/libft/ft_lstclear.c
 
-SRCS = main.c src/parser/fill_struct.c src/parser/init.c src/utils/parser_utils.c src/utils/parser_utils2.c src/checker/map_checker.c src/checker/image_checker.c src/cleanup/clean_up.c $(LIBFT_SRCS)
+SRCS = main.c src/parser/fill_struct.c src/parser/init.c src/utils/parser_utils.c src/utils/parser_utils2.c src/checker/map_checker.c src/checker/image_checker.c src/cleanup/clean_up.c src/checker/map_checker_2.c $(LIBFT_SRCS)
 OBJS = $(SRCS:.c=.o)
 
 MLX_DIR = lib/minilibx

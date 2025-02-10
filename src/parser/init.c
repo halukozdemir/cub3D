@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:09 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/08 15:18:22 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:40:53 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ t_main *init_all(void)
     main = malloc(sizeof(t_main));
     if (!main)
         return (NULL);
+    main->player_pos = (t_positon *)malloc(sizeof(t_positon));
+    if (!main->player_pos)
+        return (NULL);
+    main->player_pos->x = -1;
+    main->player_pos->y = -1;
+    main->player_pos->count = 0;
     main->textures = init_textures_struct();
     if (!main->textures)
         return (free(main), NULL);

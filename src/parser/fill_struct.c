@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/08 16:55:32 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:16:13 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,7 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
     int     i;
 
     i = 1;
-    int j = 0;
-    while (j < 6 && main->textures->textures[j])
-    {
-        printf("***textures[%d]: %d\n", j, main->textures->textures[j]);
-        j++;
-    }
+
     if (check_textures_done(main->textures)) // Bu kontrolün doğru olduğundan emin olun
     {
         printf("Hatalı map dosyası girdiniz.\n");
@@ -151,7 +146,6 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
     char *line2;
     while ((line = get_next_line(*fd)))
     {
-        printf("line %s\n",line);
         if (*(line2 = ft_strtrim(line, " ")) != '\n')
             break;
         free(line);
@@ -159,7 +153,6 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
     }
     if (line2)
         free(line2);
-    printf("line %s\n",line);
     while(line)
     {
         if (ft_strchr(line, '\n'))
@@ -173,7 +166,7 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
     }
     free(line);
     main->map->map_max_y = i;
-    printf("en uzun satır: %d, en uzun sütun: %d\n", main->map->map_max_x, main->map->map_max_y);
+    // printf("en uzun satır: %d, en uzun sütun: %d\n", main->map->map_max_x, main->map->map_max_y);
     close(*fd);
     return (EXIT_SUCCESS);
 }

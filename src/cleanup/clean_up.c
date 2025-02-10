@@ -112,5 +112,10 @@ void    free_all(t_main *main)
         free_map(main->map);
         main->map = NULL;
     }
+    if (main->player_pos)
+    {
+        free(main->player_pos);
+        main->player_pos = NULL;
+    }
     free(main);
 }

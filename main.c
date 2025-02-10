@@ -89,7 +89,8 @@ int main(int argc, char **argv)
         free_all(main);
         return (0);
     }
-    print_map(main->map->map);//yazdırma fonksiyonu
+    // print_map(main->map->map);//yazdırma fonksiyonu
     flood_fill(main);
+    flood_fill_2(main);
     free_all(main);
 }
