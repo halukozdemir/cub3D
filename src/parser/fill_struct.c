@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/10 16:16:13 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:30:39 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,8 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
         }
         free(line);
     }
-    free(line);
-    // close(fd);
-
+    if (line != NULL)
+        free(line);
     return (fd);
 }
 
