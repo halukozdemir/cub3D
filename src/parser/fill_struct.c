@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/10 19:30:39 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:42:52 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
     int     fd;
     char    *line;
     int     i;
+    char    *trimmed;
 
     i = 0;
     fd = open(file_name, O_RDWR, 0777);
@@ -33,7 +34,9 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             if (textures->textures[0] == 0)
             {
                 textures->textures[0] = 1;
-                textures->no = ft_strdup(line + i + 3);
+                trimmed = ft_strdup(line + i + 3);
+                textures->no = ft_strtrim(trimmed, " \n");
+                free(trimmed);
             }
             else
             {
@@ -48,7 +51,10 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             if (textures->textures[1] == 0)
             {
                 textures->textures[1] = 1;
-                textures->so = ft_strdup(line + i + 3);
+                trimmed = ft_strdup(line + i + 3);
+                textures->so = ft_strtrim(trimmed, "\n ");
+                printf("%d\n", ft_strlen(textures->so));
+                free(trimmed);
             }
             else
             {
@@ -63,7 +69,9 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             if (textures->textures[2] == 0)
             {
                 textures->textures[2] = 1;
-                textures->we = ft_strdup(line + i + 3);
+                trimmed = ft_strdup(line + i + 3);
+                textures->we = ft_strtrim(trimmed, " \n");
+                free(trimmed);
             }
             else
             {
@@ -78,7 +86,9 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             if (textures->textures[3] == 0)
             {
                 textures->textures[3] = 1;
-                textures->ea = ft_strdup(line + i + 3);
+                trimmed = ft_strdup(line + i + 3);
+                textures->ea = ft_strtrim(trimmed, " \n");
+                free(trimmed);
             }
             else
             {
@@ -120,7 +130,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
         }
         else if (!ft_find_in_str(line, textures->keys))
         {
-            free(line);
+            // free(line);
             break;
         }
         free(line);

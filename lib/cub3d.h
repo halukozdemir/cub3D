@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/10 18:20:05 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:33:42 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	flood_fill_2(t_main *main);
 
 
 //image_checker.c
+char    check_image(t_textures *textures);
 
 //clean_up.c
 void	free_map(t_map *map);
