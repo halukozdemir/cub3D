@@ -82,6 +82,7 @@ t_map		*init_map_struct(void);
 char    cf_count_checker(t_textures *textures);
 char	**ft_realloc(char **array, char *new_element);
 char	ft_is_empty_line(char *line);
+int count_char(const char *str, char c);
 
 //map_checker.c
 void	flood_fill(t_main *main);
@@ -94,6 +95,9 @@ void	flood_fill_2(t_main *main);
 
 //image_checker.c
 char    check_image(t_textures *textures);
+char    check_color(t_textures *textures);
+
+
 
 //clean_up.c
 void	free_map(t_map *map);

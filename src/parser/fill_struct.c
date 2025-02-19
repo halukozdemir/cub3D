@@ -100,7 +100,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
         }
         else if(ft_strncmp(line, "C ", 2) == 0)
         {
-            if (textures->textures[4] == 0)
+            if (textures->textures[4] == 0 && (count_char(line, ',') == 2))
             {
                 textures->textures[4] = 1;
                 textures->c = ft_split(line + i + 2, ',');
@@ -113,7 +113,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 return (-1);
             }
         }
-        else if (ft_strncmp(line, "F ", 2) == 0)
+        else if (ft_strncmp(line, "F ", 2) == 0 && (count_char(line, ',') == 2))
         {
             if (textures->textures[5] == 0)
             {

@@ -32,5 +32,44 @@ char    check_image(t_textures *textures)
          textures->we[ft_strlen(textures->we) - 4] != '.'))
     {
         printf("Hatalı xpm dosyası girildi.\n");
+        return (EXIT_FAILURE);
     }
+    return (EXIT_SUCCESS);
+}
+
+char    check_color(t_textures *textures)
+{
+    int     temp_d;
+    char    *temp_s;
+    int     i;
+
+    i = 0;
+    while (textures->c[i])
+    {
+        temp_d = ft_atoi(textures->c[i]);
+        temp_s = ft_itoa(temp_d);
+        if (ft_strncmp(textures->c[i], temp_s, ft_strlen(temp_s)))
+        {
+            printf("taşma var\n");
+            free(temp_s);
+            return (EXIT_FAILURE);
+        }
+        free(temp_s);
+        i++;
+    }
+    i = 0;
+    while (textures->f[i])
+    {
+        temp_d = ft_atoi(textures->f[i]);
+        temp_s = ft_itoa(temp_d);
+        if (ft_strncmp(textures->f[i], temp_s, ft_strlen(temp_s)))
+        {
+            printf("taşma var\n");
+            free(temp_s);
+            return (EXIT_FAILURE);
+        }
+        free(temp_s);
+        i++;
+    }
+    return (EXIT_SUCCESS);
 }

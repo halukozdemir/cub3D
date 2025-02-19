@@ -55,3 +55,14 @@ char	ft_is_empty_line(char *line)
 	}
 	return (EXIT_SUCCESS);
 }
+
+int count_char(const char *str, char c)
+{
+    int count = 0;
+    while (*str) {
+        if (*str == c)
+            count++;
+        str++;
+    }
+    return count;
+}

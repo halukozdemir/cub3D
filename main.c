@@ -73,12 +73,12 @@ int main(int argc, char **argv)
     main = init_all();
 	if (!main->textures)
 		return (0);
-	if ((fd = fill_textures_struct(main->textures, "maps/map.cub")))
+    if (!(fd = fill_textures_struct(main->textures, "maps/map.cub")))
     {
         free_all(main);
         return (0);
     }
-    if (check_image(main->textures))
+    if (check_image(main->textures) || check_color(main->textures))
     {
         free_all(main);
         return (0);

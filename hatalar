@@ -5,5 +5,5 @@
 // harita texturelerin altında mı
 //xpm uzzatntısı doğru mu
 açılabilir bir dosya mı (fd < 0 mı)
-colorlar int mi
-texture veya colar arasında geçetsiz katakter var mı
+// colorlar int mi
+//texture veya colar arasında geçetsiz katakter var mı
