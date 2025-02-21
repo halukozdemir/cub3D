@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 16:50:21 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/12 17:52:34 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:07:01 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 char    check_image(t_textures *textures)
 {
-    if ((textures->no[ft_strlen(textures->no) - 1] != 'm' ||
+    if (!textures->no || !textures->so || !textures->we || !textures->ea || !textures->c || !textures->f)
+    {
+        printf("Invalid Map.\n");
+        return (EXIT_FAILURE);
+    }
+    else if ((textures->no[ft_strlen(textures->no) - 1] != 'm' ||
          textures->no[ft_strlen(textures->no) - 2] != 'p' ||
          textures->no[ft_strlen(textures->no) - 3] != 'x' ||
          textures->no[ft_strlen(textures->no) - 4] != '.' ||
@@ -48,9 +53,9 @@ char    check_color(t_textures *textures)
     {
         temp_d = ft_atoi(textures->c[i]);
         temp_s = ft_itoa(temp_d);
-        if (ft_strncmp(textures->c[i], temp_s, ft_strlen(temp_s)))
+        if (ft_strncmp(textures->c[i], temp_s, ft_strlen(temp_s)) || (temp_d < 0 || temp_d >= 255))
         {
-            printf("taşma var\n");
+            printf("Invalid Map.\n");
             free(temp_s);
             return (EXIT_FAILURE);
         }
@@ -62,9 +67,9 @@ char    check_color(t_textures *textures)
     {
         temp_d = ft_atoi(textures->f[i]);
         temp_s = ft_itoa(temp_d);
-        if (ft_strncmp(textures->f[i], temp_s, ft_strlen(temp_s)))
+        if (ft_strncmp(textures->f[i], temp_s, ft_strlen(temp_s)) || (temp_d < 0 || temp_d >= 255))
         {
-            printf("taşma var\n");
+            printf("Invalid Map.\n");
             free(temp_s);
             return (EXIT_FAILURE);
         }

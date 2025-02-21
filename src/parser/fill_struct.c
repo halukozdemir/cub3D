@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/12 17:42:52 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:41:58 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
         perror("Harita dosyası okunamadı.\n");
         return (-1);
     }
-    while ((line = get_next_line(fd)) != NULL && check_textures_done(textures))
+    while ((line = get_next_line(fd)) != NULL)
     {
         i = 0;
         skip_whitespaces(line, &i);
@@ -40,7 +40,6 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             }
             else
             {
-                printf("1'den fazla NO asset'i tanımlanmış. \n");
                 free(line);
                 close(fd);
                 return (-1);
@@ -58,7 +57,6 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             }
             else
             {
-                printf("1'den fazla SO asset'i tanımlanmış. \n");
                 free(line);
                 close(fd);
                 return (-1);
@@ -75,7 +73,6 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             }
             else
             {
-                printf("1'den fazla WE asset'i tanımlanmış. \n");
                 free(line);
                 close(fd);
                 return (-1);
@@ -92,7 +89,6 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             }
             else
             {
-                printf("1'den fazla EA asset'i tanımlanmış. \n");
                 free(line);
                 close(fd);
                 return (-1);
@@ -107,7 +103,6 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             }
             else
             {
-                printf("1'den fazla C asset'i tanımlanmış. \n");
                 free(line);
                 close(fd);
                 return (-1);
@@ -122,7 +117,6 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             }
             else
             {
-                printf("1'den fazla F asset'i tanımlanmış. \n");
                 free(line);
                 close(fd);
                 return (-1);
@@ -131,8 +125,14 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
         else if (!ft_find_in_str(line, textures->keys))
         {
             // free(line);
+            printf("-%s-ddd\n", line);
             break;
         }
+        // else
+        // {
+        //     printf("%sddsd\n", line);
+        //     fd = -1;
+        // }
         free(line);
     }
     if (line != NULL)
@@ -246,6 +246,8 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
     i = 0;
     while (i < main->map->map_max_y && line != NULL)
     {
+        if (!ft_find_in_str(line, "10NSWE\n "))
+            break;
         int j = 0;
         while (line[j] && line[j] != '\n')
         {
@@ -256,6 +258,8 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
         line = get_next_line(*fd);
         i++;
     }
+    if (line)
+        free(line);
     close(*fd);
     return (EXIT_SUCCESS);
 }

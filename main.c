@@ -73,8 +73,10 @@ int main(int argc, char **argv)
     main = init_all();
 	if (!main->textures)
 		return (0);
-    if (!(fd = fill_textures_struct(main->textures, "maps/map.cub")))
+    fd = fill_textures_struct(main->textures, "maps/map.cub");
+    if (fd == -1)
     {
+        printf("Invalid map. \n");
         free_all(main);
         return (0);
     }
