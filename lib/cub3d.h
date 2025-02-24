@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/12 16:33:42 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:55:09 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define HEIGHT 1920
 # define WIDTH 1080
+# define BUFFER_SIZE 1
 
 #include "minilibx/mlx.h"
 #include "libft/libft.h"
