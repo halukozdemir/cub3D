@@ -98,6 +98,9 @@ int main(int argc, char **argv)
     }
     // print_map(main->map->map);//yazdırma fonksiyonu
     flood_fill(main);
-    flood_fill_2(main);
+    flood_fill_2(main); 
+    if (!init_mlx(&main->mlx))
+        return (0);
+    printf("sa\n");
     free_all(main);
 }
