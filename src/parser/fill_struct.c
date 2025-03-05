@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/24 17:25:20 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:51:41 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[0] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->no = ft_strtrim(trimmed, " \n");
-                free(trimmed);
+                free(trimmed); // trimmed serbest bırakıldı
             }
             else
             {
@@ -52,7 +52,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[1] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->so = ft_strtrim(trimmed, "\n ");
-                free(trimmed);
+                free(trimmed); // trimmed serbest bırakıldı
             }
             else
             {
@@ -68,7 +68,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[2] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->we = ft_strtrim(trimmed, " \n");
-                free(trimmed);
+                free(trimmed); // trimmed serbest bırakıldı
             }
             else
             {
@@ -84,7 +84,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[3] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->ea = ft_strtrim(trimmed, " \n");
-                free(trimmed);
+                free(trimmed); // trimmed serbest bırakıldı
             }
             else
             {
@@ -99,6 +99,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             {
                 textures->textures[4] = 1;
                 textures->c = ft_split(line + i + 2, ',');
+                // textures->c için bellek serbest bırakma işlemi eklenmeli
             }
             else
             {
@@ -124,15 +125,17 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
         else if(!ft_find_in_str(line, "FCNSEAWO \n"))
         {
             printf("Invalid Map.\n");
+            free(line);
             break;
         }
         else if (!check_textures_done(textures))
+        {
+            free(line); // line serbest bırakıldı
             break;
-        if (line)
-            free(line);
+        }
+        free(line); // line serbest bırakıldı
     }
-    if (line)
-        free(line);
+    close(fd);
     return (fd);
 }
 

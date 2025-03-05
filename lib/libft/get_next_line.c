@@ -6,155 +6,173 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 19:46:39 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/24 17:54:32 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:46:35 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "../cub3d.h"
-int	ft_strlens(const char *str)
+
+size_t	ft_strlens(const char *str)
 {
-	if (str == NULL)
-		return (0);
-	if (*str == 0)
-		return (0);
-	return (1 + ft_strlen(str + 1));
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
-int	ft_linesize(const char *str)
+char	*ft_strdups(const char *src)
 {
-	if (str == NULL)
+	char	*dest;
+	int		i;
+
+	i = 0;
+	dest = (char *)malloc((ft_strlens(src) + 1) * sizeof(char));
+	if (!dest)
 		return (0);
-	if (*str == 0 || *str == '\n')
-		return (0);
-	return (1 + ft_linesize(str + 1));
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
-char	*ft_strchrs(const char *s, int c)
-{
-	unsigned char	chr;
-
-	chr = (unsigned char)c;
-	if (s == NULL)
-		return (NULL);
-	if (*s == 0)
-		return (NULL);
-	if (*s == chr)
-		return ((char *)s);
-	return (ft_strchrs((s + 1), c));
-}
-
-char	*ft_strjoins(char *s1, const char *s2)
+char	*ft_strjoins(char const *s1, char const *s2)
 {
 	char	*str;
-	int		s1_len;
-	int		s2_len;
+	int		i;
+	int		j;
 
-	if (!s1)
-	{
-		s1 = malloc(sizeof(char) * 1);
-		if (!s1)
-			return (NULL);
-		s1[0] = '\0';
-	}
-	s1_len = ft_strlens(s1);
-	s2_len = ft_strlens(s2);
-	str = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	i = 0;
+	j = 0;
+	if (!s1 || !s2)
+		return (0);
+	str = (char *)malloc((ft_strlens(s1) + ft_strlens(s2) + 1) * sizeof(char));
 	if (!str)
-		return (free(s1), NULL);
-	str[s1_len + s2_len] = '\0';
-	while (s2_len--)
-		str[s1_len + s2_len] = s2[s2_len];
-	while (s1_len--)
-		str[s1_len] = s1[s1_len];
-	return (free(s1), str);
-}
-
-char	*ft_substrs(char *s, int start, int len)
-{
-	char	*substr;
-	int		s_len;
-
-	if (!s)
-		return (NULL);
-	s_len = ft_strlens(s);
-	if (s_len < start)
-		return (NULL);
-	if (s_len < len + start)
-		len = s_len - start;
-	substr = (char *)malloc((sizeof(char) * len + 1));
-	if (!substr)
-		return (free(s), NULL);
-	substr[len] = '\0';
-	while (len--)
-		substr[len] = s[start + len];
-	return (free(s), substr);
-}
-
-int	set_initial_fdata(char **data)
-{
-	*data = (char *) malloc(sizeof(char));
-	if (*data)
-		**data = '\0';
-	return (*data != 0);
-}
-
-void	swap_str_and_free(char **str, char *newStr)
-{
-	free(*str);
-	*str = newStr;
-}
-
-char	*free_fdata(char	**fdata)
-{
-	if (*fdata)
+		return (0);
+	while (s1[i])
 	{
-		free(*fdata);
-		*fdata = 0;
+		str[i] = s1[i];
+		i++;
 	}
+	while (s2[j])
+	{
+		str[i] = s2[j];
+		i++;
+		j++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_substrs(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	str = (char *)malloc(sizeof(*s) * (len + 1));
+	if (str == 0)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (i >= start && j < len)
+		{
+			str[j] = s[i];
+			j++;
+		}
+		i++;
+	}
+	str[j] = 0;
+	return (str);
+}
+
+char	*ft_strchrs(const char *str, int c)
+{
+	while (*str)
+	{
+		if (*str == (char)c)
+			return ((char *)str);
+		str++;
+	}
+	if (c == '\0')
+		return ((char *)str);
 	return (0);
 }
 
-char	*get_line(char *file_data)
+char	*read_line(int fd, char *buffer, char *stack)
 {
-	size_t	len;
+	int		read_byte;
+	char	*temp;
 
-	len = 0;
-	while (file_data[len])
-		if (file_data[len++] == '\n')
+	while (1)
+	{
+		read_byte = read(fd, buffer, BUFFER_SIZE);
+		if (read_byte == -1)
+			return (0);
+		else if (read_byte == 0)
 			break ;
-	return (ft_substr(file_data, 0, len));
+		buffer[read_byte] = '\0';
+		if (!stack)
+			stack = ft_strdups("");
+		temp = stack;
+		stack = ft_strjoins(temp, buffer);
+		free(temp);
+		temp = NULL;
+		if (ft_strchrs(buffer, '\n'))
+			break ;
+	}
+	return (stack);
+}
+
+char	*clean_stack(char *line)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	while (line[i] && line[i] != '\n')
+		i++;
+	if (line[i] == '\0')
+		return (NULL);
+	str = ft_substrs(line, i + 1, ft_strlens(line) - i);
+	if (str == NULL)
+		return (NULL);
+	if (str[0] == '\0')
+	{
+		free(str);
+		str = NULL;
+		return (NULL);
+	}
+	line[i + 1] = '\0';
+	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	int			bytes_read;
-	char		buffer[BUFFER_SIZE + 1];
+	static char	*stack;
 	char		*line;
-	static char	*file_data;
+	char		*buffer;
 
-	if (fd < 0 || (!file_data && !set_initial_fdata(&file_data)))
-		return (0);
-	while (file_data && !ft_strchr(file_data, '\n'))
+	if (fd < 0 && BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	line = read_line(fd, buffer, stack);
+	free(buffer);
+	if (line == NULL)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == 0 || bytes_read == -1)
-			break ;
-		buffer[bytes_read] = '\0';
-		swap_str_and_free(&file_data, ft_strjoin(file_data, buffer));
+		free(stack);
+		stack = NULL;
+		return (NULL);
 	}
-	if (!file_data || !*file_data || bytes_read == -1)
-		return (free_fdata(&file_data));
-	line = get_line(file_data);
-	if (!line)
-		return (free_fdata(&file_data));
-	swap_str_and_free(&file_data, \
-	ft_substr(file_data, ft_strlen(line), \
-	ft_strlen(file_data) - ft_strlen(line)));
-	if (!file_data || !*file_data)
-	{
-		free(file_data);
-		file_data = NULL;
-	}
+	stack = clean_stack(line);
 	return (line);
 }
