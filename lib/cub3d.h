@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/05 18:24:01 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:23:39 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_ray
 {
 	double	camera_x;
 	double	raydir_x;
-	double	raydir_y
+	double	raydir_y;
 	double	deltadist_x;
 	double	deltadist_y;
 	double	sidedist_x;
