@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:36:47 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/08 17:33:01 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:29:18 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,8 @@ void    display(t_main *main)
         ray->raydir_y = main->player_pos->diry + main->player_pos->planey * ray->camera_x;
         ray->map_x = (int)main->player_pos->x;
         ray->map_y = (int)main->player_pos->y;
-        ray->deltadist_x = 1e30;
-        if (ray->deltadist_x != 0)
-            ray->deltadist_x = fabs(1 / ray->raydir_x);
-        ray->deltadist_y = 1e30;
-        if (ray->deltadist_y != 0)
-            ray->deltadist_y = fabs(1 / ray->raydir_y);
+        ray->deltadist_x = (ray->raydir_x == 0) ? 1e30 : fabs(1 / ray->raydir_x);
+        ray->deltadist_y = (ray->raydir_y == 0) ? 1e30 : fabs(1 / ray->raydir_y);
         ray->hit = 0;
         if (ray->raydir_x < 0)
         {
@@ -71,17 +67,16 @@ void    display(t_main *main)
         if (ray->raydir_y < 0)
         {
             ray->step_y = -1;
-            ray->sidedist_x = (main->player_pos->y - ray->map_y) * ray->deltadist_y;
+            ray->sidedist_y = (main->player_pos->y - ray->map_y) * ray->deltadist_y;
         }
         else
         {
             ray->step_y = 1;
-            ray->sidedist_x = (ray->map_y + 1.0 - main->player_pos->y) * ray->deltadist_y;
+            ray->sidedist_y = (ray->map_y + 1.0 - main->player_pos->y) * ray->deltadist_y;
         }
-        // print_map(main->map->map);
+        printf("%f %f %f %f\n", ray->deltadist_x,  ray->deltadist_y, ray->sidedist_x, ray->sidedist_y);
         while (main->map->map[ray->map_y][ray->map_x] != '1')
         {
-            printf("sa1\n");
             if (ray->sidedist_x < ray->sidedist_y)
             {
                 ray->sidedist_x += ray->deltadist_x;
@@ -95,7 +90,10 @@ void    display(t_main *main)
                 ray->side = 1;
             }
         }
-        printf("sa\n");
+        if (ray->side == 0)
+            ray->perpwall_dist = (ray->sidedist_x - ray->deltadist_x);
+        else
+            ray->perpwall_dist = (ray->sidedist_y - ray->deltadist_y);
         ray->line_height = (int)(HEIGHT / ray->perpwall_dist);
         ray->draw_start = -ray->line_height / 2 + HEIGHT / 2;
         if(ray->draw_start < 0)
@@ -105,10 +103,12 @@ void    display(t_main *main)
             ray->draw_end = HEIGHT - 1;
         while (ray->draw_start <= ray->draw_end)
         {
-            ((unsigned int *)main->mlx.img_addr)[(int)((ray->draw_start * main->mlx.size_line + ray->camera_x * (main->mlx.bpp / 8)) / 4)] = rgbtouint(main->textures->c);
-            printf("1\n");
+            int pixel_index = (ray->draw_start * main->mlx.size_line / 4) + ray->x;
+            ((unsigned int *)main->mlx.img_addr)[pixel_index] = rgbtouint(main->textures->c);
+
             ray->draw_start++;
         }
     }
+    mlx_put_image_to_window(main->mlx.mlx, main->mlx.win, main->mlx.image, 0, 0);
     
 }

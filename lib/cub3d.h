@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/08 17:29:15 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:08:16 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ typedef struct s_mlx
 
 typedef struct s_position
 {
-	int			x;
-	int			y;
+	double		x;
+	double		y;
 	double		dirx;
 	double		diry;
 	double		planex;
