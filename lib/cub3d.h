@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/08 16:23:39 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:29:15 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,14 @@ typedef struct s_ray
 	double	sidedist_x;
 	double	sidedist_y;
 	double	perpwall_dist;
+	int		draw_start;
+	int		draw_end;
+	int		line_height;
 	int		step_x;
 	int		step_y;
 	int		map_x;
 	int		map_y;
+	int		side;
 	int		hit;
 	int		x;
 }	t_ray;
@@ -150,6 +154,6 @@ void print_map(char **map);
 
 
 //mlx.c
-char    init_mlx(t_mlx *mlx);
+char    init_mlx(t_main *main, t_mlx *mlx);
 
 #endif

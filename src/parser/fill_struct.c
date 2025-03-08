@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/05 15:51:41 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:34:31 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,5 +284,6 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
     free(line);
 
     close(*fd);
+    print_map(main->map->map);
     return (EXIT_SUCCESS);
 }
