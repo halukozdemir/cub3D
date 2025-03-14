@@ -86,29 +86,32 @@ int main(int argc, char **argv)
         return (0);
     }
 	// print_textures(main->textures);//yazdırma fonksiyonu
-	// if (get_map_size(main, &fd, "maps/map.cub"))
-    // {
-    //     free_all(main);
-	// 	return (0);
-    // }
-    // if (fill_map_struct(main, &fd, "maps/map.cub"))
-    // {
-    //     free_all(main);
-    //     return (0);
-    // }
-    // // print_map(main->map->map);//yazdırma fonksiyonu
-    // flood_fill(main);
-    // flood_fill_2(main); 
-    main->map->map = ft_split("111\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n1E1\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n111", '\n'); 
-    main->map->map_max_x = 2;
-    main->map->map_max_y = 2;
-    main->player_pos->dirx = 0;
-    main->player_pos->diry = 1;
-    main->player_pos->planey = 0;
-    main->player_pos->planex = 0.66;
-    main->player_pos->x = 1 + .5;
-    main->player_pos->y = 1 + .5;
-    if (!init_mlx(main, &main->mlx))
+	if (get_map_size(main, &fd, "maps/map.cub"))
+    {
+        free_all(main);
+		return (0);
+    }
+    if (fill_map_struct(main, &fd, "maps/map.cub"))
+    {
+        free_all(main);
         return (0);
+    }
+    print_map(main->map->map);//yazdırma fonksiyonu
+    flood_fill(main);
+    flood_fill_2(main); 
+
+
+
+    // main->map->map = ft_split("111\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n1E1\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n111", '\n'); 
+    // main->map->map_max_x = 2;
+    // main->map->map_max_y = 2;
+    // main->player_pos->dirx = 0;
+    // main->player_pos->diry = 1;
+    // main->player_pos->planey = 0;
+    // main->player_pos->planex = 0.66;
+    // main->player_pos->x = 1 + .5;
+    // main->player_pos->y = 1 + .5;
+    // if (!init_mlx(main, &main->mlx))
+    //     return (0);
     free_all(main);
 }

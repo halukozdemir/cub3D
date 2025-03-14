@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:36:47 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/08 18:29:18 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:42:24 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void    display(t_main *main)
             ray->step_y = 1;
             ray->sidedist_y = (ray->map_y + 1.0 - main->player_pos->y) * ray->deltadist_y;
         }
-        printf("%f %f %f %f\n", ray->deltadist_x,  ray->deltadist_y, ray->sidedist_x, ray->sidedist_y);
+        // printf("%f %f %f %f\n", ray->deltadist_x,  ray->deltadist_y, ray->sidedist_x, ray->sidedist_y);
         while (main->map->map[ray->map_y][ray->map_x] != '1')
         {
             if (ray->sidedist_x < ray->sidedist_y)
