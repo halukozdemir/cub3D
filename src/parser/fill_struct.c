@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/08 17:34:31 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:55:33 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[0] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->no = ft_strtrim(trimmed, " \n");
-                free(trimmed); // trimmed serbest bırakıldı
+                free(trimmed);
             }
             else
             {
@@ -52,7 +52,8 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[1] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->so = ft_strtrim(trimmed, "\n ");
-                free(trimmed); // trimmed serbest bırakıldı
+                printf("%d\n", ft_strlen(textures->so));
+                free(trimmed);
             }
             else
             {
@@ -68,7 +69,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[2] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->we = ft_strtrim(trimmed, " \n");
-                free(trimmed); // trimmed serbest bırakıldı
+                free(trimmed);
             }
             else
             {
@@ -84,7 +85,7 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[3] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->ea = ft_strtrim(trimmed, " \n");
-                free(trimmed); // trimmed serbest bırakıldı
+                free(trimmed);
             }
             else
             {
@@ -99,7 +100,6 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
             {
                 textures->textures[4] = 1;
                 textures->c = ft_split(line + i + 2, ',');
-                // textures->c için bellek serbest bırakma işlemi eklenmeli
             }
             else
             {
@@ -122,20 +122,21 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 return (-1);
             }
         }
-        else if(!ft_find_in_str(line, "FCNSEAWO \n"))
+        else if (!ft_find_in_str(line, textures->keys))
         {
-            printf("Invalid Map.\n");
-            free(line);
+            // free(line);
+            printf("-%s-ddd\n", line);
             break;
         }
-        else if (!check_textures_done(textures))
-        {
-            free(line); // line serbest bırakıldı
-            break;
-        }
-        free(line); // line serbest bırakıldı
+        // else
+        // {
+        //     printf("%sddsd\n", line);
+        //     fd = -1;
+        // }
+        free(line);
     }
-    close(fd);
+    if (line != NULL)
+        free(line);
     return (fd);
 }
 
@@ -154,22 +155,13 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
     char *line2;
     while ((line = get_next_line(*fd)))
     {
-        if (!ft_find_in_str(line, "10NSWE \n"))
-        {
-            printf("Invalid Map.\n");
+        if (*(line2 = ft_strtrim(line, " ")) != '\n')
             break;
-        }
-        line2 = ft_strtrim(line, " ");
-        if (*line2 != '\n')
-        {
-            free(line2);
-            break;
-        }
-        free(line2);
         free(line);
+        free(line2);
     }
-    // if (line2)
-    //     free(line2);
+    if (line2)
+        free(line2);
     while(line)
     {
         if (ft_strchr(line, '\n'))
@@ -226,20 +218,17 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
 {
     char    *line;
     int     i;
-
     *fd = open(file_name, O_RDWR);
-    if (*fd < 0)
+    if (fd < 0)
         return (EXIT_FAILURE);
-
     if (init_map(main->map) == EXIT_FAILURE)
     {
         close(*fd);
         return (EXIT_FAILURE);
     }
-
-    // Skip lines until the map starts
     while ((line = get_next_line(*fd)) != NULL)
-    {  
+    {
+            
         if (ft_find_in_str(line, "1 0SNWE\n") || *line == '\n')
         {
             free(line);
@@ -247,27 +236,18 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
         }
         free(line);
     }
-    // Skip empty lines before the map
-    while ((line = get_next_line(*fd)) != NULL)
+    while ((line = get_next_line(*fd)))
     {
-        
         if (!ft_find_in_str(line, " \n"))
             break;
         free(line);
-        line = NULL; // Set line to NULL after freeing
     }
     
-    // Fill the map
     i = 0;
     while (i < main->map->map_max_y && line != NULL)
     {
         if (!ft_find_in_str(line, "10NSWE\n "))
-        {
-            free(line);
-            line = NULL; // Set line to NULL after freeing
             break;
-        }
-
         int j = 0;
         while (line[j] && line[j] != '\n')
         {
@@ -275,15 +255,11 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
             j++;
         }
         free(line);
-        line = NULL; // Set line to NULL after freeing
         line = get_next_line(*fd);
         i++;
     }
-
-    // Free the last line if it exists
-    free(line);
-
+    if (line)
+        free(line);
     close(*fd);
-    print_map(main->map->map);
     return (EXIT_SUCCESS);
 }
