@@ -86,31 +86,42 @@ int main(int argc, char **argv)
         return (0);
     }
 	// print_textures(main->textures);//yazdırma fonksiyonu
-	// if (get_map_size(main, &fd, "maps/map.cub"))
-    // {
-    //     free_all(main);
-	// 	return (0);
-    // }
-    // if (fill_map_struct(main, &fd, "maps/map.cub"))
-    // {
-    //     free_all(main);
-    //     return (0);
-    // }
-    // // print_map(main->map->map);//yazdırma fonksiyonu
-    // flood_fill(main);
-    // flood_fill_2(main); 
+	if (get_map_size(main, &fd, "maps/map.cub"))
+    {
+        free_all(main);
+		return (0);
+    }
+    if (fill_map_struct(main, &fd, "maps/map.cub"))
+    {
+        free_all(main);
+        return (0);
+    }
+    // print_map(main->map->map);//yazdırma fonksiyonu
+    flood_fill(main);
+    flood_fill_2(main); 
 
+    if (!get_player_pos(main))  // 💥 Bunu burada çağır!
+    {
+        printf("Invalid or multiple player start positions.\n");
+        free_all(main);
+        return (0);
+    }
 
+    // printf("map max x:%d\nmap max y:%d\n", main->map->map_max_x, main->map->map_max_y);
+    // printf("dirx:%d\ndiry:%d\n", main->player_pos->dirx, main->player_pos->diry);
+    // printf("player pos_x:%d\nplayer pos_y:%d\n", main->player_pos->x, main->player_pos->y);
 
-    main->map->map = ft_split("111\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n1E1\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n111", '\n'); 
-    main->map->map_max_x = 2;
-    main->map->map_max_y = 2;
-    main->player_pos->dirx = 0;
-    main->player_pos->diry = 1;
-    main->player_pos->planey = 0;
-    main->player_pos->planex = 0.66;
-    main->player_pos->x = 1 + .5;
-    main->player_pos->y = 1 + .5;
+    // main->map->map = ft_split("111\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n1E1\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n101\n111", '\n'); 
+    // main->map->map_max_x = 2;
+    // main->map->map_max_y = 2;
+    // main->player_pos->dirx = 0;
+    // main->player_pos->diry = 1;
+    // main->player_pos->planey = 0;
+    // main->player_pos->planex = 0.66;
+    // main->player_pos->x = 1 + .5;
+    // main->player_pos->y = 1 + .5;
+
+    main->mlx.last_tick = 0;
     if (!init_mlx(main, &main->mlx))
         return (0);
     free_all(main);

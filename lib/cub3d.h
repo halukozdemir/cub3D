@@ -6,18 +6,30 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/08 18:08:16 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:50:01 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 720
+# define WIDTH 1280
 # define BUFFER_SIZE 1
 
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_ESC 65307
+
+# define MOVE_SPEED  3
+# define ROTATION_SPEED 1
+
 #include "minilibx/mlx.h"
+#include <sys/time.h>
 #include "libft/libft.h"
 #include <stdio.h>
 #include <fcntl.h>
@@ -35,11 +47,6 @@ typedef struct s_map
 
 }				t_map;
 
-typedef	struct cub3d
-{
-	/* data */
-};
-
 typedef struct s_ray
 {
 	double	camera_x;
@@ -50,6 +57,10 @@ typedef struct s_ray
 	double	sidedist_x;
 	double	sidedist_y;
 	double	perpwall_dist;
+	double	wall_x;
+	double	textpos;
+	double	textstep;
+	int		texture_x;
 	int		draw_start;
 	int		draw_end;
 	int		line_height;
@@ -74,15 +85,27 @@ typedef struct s_textures
 	char	**f;
 }               t_textures;
 
+typedef struct s_image
+{
+	void	*img;
+	void	*addr;
+	int		bpp;
+	int		size_line;
+	int		endian;
+	int		width;
+	int		height;
+}	t_image;
+
 typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	void	*image;
-	void	*img_addr;
-	int		bpp;
-	int		size_line;
-	int		endian;
+	t_image	image;
+	t_image	so_text;
+	t_image	we_text;
+	t_image	no_text;
+	t_image	ea_text;
+	unsigned long long	last_tick;
 }	t_mlx;
 
 typedef struct s_position
@@ -96,14 +119,27 @@ typedef struct s_position
 	int			count;
 }				t_positon;
 
+typedef struct s_keys
+{
+	int			w_pressed;
+	int			s_pressed;
+	int			a_pressed;
+	int			d_pressed;
+	int			left_pressed;
+	int			right_pressed;
+	int			esc_pressed;
+}	t_keys;
+
 typedef struct s_main
 {
 	t_mlx		mlx;
 	t_ray		ray;
 	t_map		*map;
+	t_keys		keys;
 	t_textures	*textures;
 	t_positon	*player_pos;
 }				t_main;
+
 
 //parser_utils.c
 char	ft_find_in_str(char *line, char *str);
@@ -155,5 +191,9 @@ void print_map(char **map);
 
 //mlx.c
 char    init_mlx(t_main *main, t_mlx *mlx);
+
+//player.c
+bool get_player_pos(t_main *main);
+
 
 #endif

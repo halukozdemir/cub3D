@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:09 by halozdem          #+#    #+#             */
-/*   Updated: 2025/03/14 17:57:01 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:55:57 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_map   *init_map_struct(void)
 t_main *init_all(void)
 {
     t_main *main;
-
     main = malloc(sizeof(t_main));
     if (!main)
         return (NULL);
