@@ -1,9 +1,9 @@
 F 100,250,250
 C 56,250,0
-NO ./game_assets/NO.xpm
-SO ./game_assets/SO.xpm
-EA ./game_assets/EA.xpm
-WE ./game_assets/WE.xpm
+NO ./textures/NO.xpm
+SO ./textures/SO.xpm
+EA ./textures/EA.xpm
+WE ./textures/WE.xpm
 
 
 

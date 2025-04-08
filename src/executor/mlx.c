@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:36:47 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/08 18:54:04 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:18:51 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ char    init_mlx(t_main *main, t_mlx *mlx)
     if (!mlx->image.addr)
         return (mlx_clear_window(mlx->mlx, mlx->win), mlx_destroy_display(mlx->mlx), false);
 	mlx->we_text.img = mlx_xpm_file_to_image(mlx->mlx, main->textures->we, &mlx->we_text.width, &mlx->we_text.height);
+    printf("--%s--\n",main->textures->we);
 	if (!mlx->we_text.img)
 		return (mlx_clear_window(mlx->mlx, mlx->win), mlx_destroy_display(mlx->mlx), false);
 	mlx->we_text.addr = mlx_get_data_addr(mlx->we_text.img, &mlx->we_text.bpp, &mlx->we_text.size_line, &mlx->we_text.endian);
