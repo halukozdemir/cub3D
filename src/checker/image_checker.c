@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 16:50:21 by halozdem          #+#    #+#             */
-/*   Updated: 2025/02/21 17:07:01 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:07:57 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,42 @@ char    check_image(t_textures *textures)
         return (EXIT_FAILURE);
     }
     return (EXIT_SUCCESS);
+}
+
+static char check_texture_file(char *filename)
+{
+    int fd;
+    char buffer[1];
+    ssize_t bytes_read;
+
+    fd = open(filename, O_RDONLY);
+    if (fd < 0)
+    {
+        perror("Texture dosyası açılamadı");
+        return EXIT_FAILURE;
+    }
+    bytes_read = read(fd, buffer, 1);
+    close(fd);
+    if (bytes_read <= 0)
+    {
+        printf("HATA: Texture dosyası boş: \"%s\"\n", filename);
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
+char is_any_texture_file_empty(t_textures *tex)
+{
+    if (check_texture_file(tex->no) == EXIT_FAILURE)
+        return EXIT_FAILURE;
+    if (check_texture_file(tex->so) == EXIT_FAILURE)
+        return EXIT_FAILURE;
+    if (check_texture_file(tex->we) == EXIT_FAILURE)
+        return EXIT_FAILURE;
+    if (check_texture_file(tex->ea) == EXIT_FAILURE)
+        return EXIT_FAILURE;
+
+    return EXIT_SUCCESS;
 }
 
 char    check_color(t_textures *textures)

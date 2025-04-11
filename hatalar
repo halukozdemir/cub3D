@@ -1,17 +1,17 @@
-// karakter kontrolü
-// player sayısı
-//  harita açıklığu
-// texture sayısı
-// harita texturelerin altında mı
-//xpm uzzatntısı doğru mu
-açılabilir bir dosya mı (fd < 0 mı)
-// colorlar int mi
-//texture veya colar arasında geçetsiz katakter var mı
+// karakter kontrolü ok
+// player sayısı ok
+//  harita açıklığu ok
+// texture sayısı ok
+// harita texturelerin altında mı ok
+//xpm uzzatntısı doğru mu ok
+//açılabilir bir dosya mı (fd < 0 mı) ok
+// colorlar int mi ok
+//texture veya colar arasında geçetsiz katakter var mı ok
 
 
 
 // **************************************
-// Eksik texture hatası seg
+// Eksik texture hatası seg 
  fazla texture hatası
  empty map
 //         Z111111111111111111111111

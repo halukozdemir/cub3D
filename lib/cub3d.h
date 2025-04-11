@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/08 18:50:01 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:08:04 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ char	check_fill_done(t_textures *textures);
 int		fill_textures_struct(t_textures *textures, const char *file_name);
 char	get_map_size(t_main *main, int *d, const char *file_name);
 char	fill_map_struct(t_main *main, int *fd, const char *file_name);
+int has_non_space_or_newline(const char *str);
 
 
 //init.c
@@ -177,6 +178,7 @@ void	flood_fill_2(t_main *main);
 //image_checker.c
 char    check_image(t_textures *textures);
 char    check_color(t_textures *textures);
+char is_any_texture_file_empty(t_textures *tex);
 
 
 

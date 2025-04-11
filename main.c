@@ -125,7 +125,7 @@ int main(int argc, char **argv)
         free_all(main);
         return (0);
     }
-    if (check_image(main->textures) || check_color(main->textures))
+    if (check_image(main->textures) || check_color(main->textures) || is_any_texture_file_empty(main->textures))
     {
         free_all(main);
         return (0);
@@ -134,10 +134,12 @@ int main(int argc, char **argv)
 	if (get_map_size(main, &fd, "maps/map.cub"))
     {
         free_all(main);
+        printf("Invalid Map.\n");
 		return (0);
     }
     if (fill_map_struct(main, &fd, "maps/map.cub"))
     {
+        printf("saddad\n");
         free_all(main);
         return (0);
     }
@@ -166,9 +168,9 @@ int main(int argc, char **argv)
     // main->player_pos->x = 1 + .5;
     // main->player_pos->y = 1 + .5;
 
-    main->mlx.last_tick = 0;
-    // debug_main_info(main);
-    if (!init_mlx(main, &main->mlx))
-        return (0);
+    // main->mlx.last_tick = 0;
+    // // debug_main_info(main);
+    // if (!init_mlx(main, &main->mlx))
+    //     return (0);
     free_all(main);
 }

@@ -6,18 +6,30 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/08 16:53:10 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:44:20 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
+
+int has_non_space_or_newline(const char *str)
+{
+    if (*str == '\0') // stringin sonuna geldiysek
+        return 0;
+    if (*str != ' ' && *str != '\n' && *str != '1')
+        return 1;
+    return has_non_space_or_newline(str + 1); // sıradaki karaktere geç
+}
+
 int fill_textures_struct(t_textures *textures, const char *file_name)
 {
     int     fd;
     char    *line;
     int     i;
     char    *trimmed;
+    bool    error;
 
+    error = false;
     i = 0;
     fd = open(file_name, O_RDWR, 0777);
     if (fd < 0)
@@ -29,6 +41,15 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
     {
         i = 0;
         skip_whitespaces(line, &i);
+
+        // printf("okudugum line: %s\n", line);
+        // printf("line: %d\n", *(line + i));
+        // if (*(line + i) == '\n' || *(line + i) == 0)
+        // {
+        //     printf("girdi\n");
+        //     free(line);
+        //     continue;   
+        // }
         if (ft_strncmp(line, "NO ", 3) == 0)
         {
             if (textures->textures[0] == 0)
@@ -52,7 +73,6 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
                 textures->textures[1] = 1;
                 trimmed = ft_strdup(line + i + 3);
                 textures->so = ft_strtrim(trimmed, "\n ");
-                printf("%d\n", ft_strlen(textures->so));
                 free(trimmed);
             }
             else
@@ -124,8 +144,20 @@ int fill_textures_struct(t_textures *textures, const char *file_name)
         }
         else if (!ft_find_in_str(line, textures->keys))
         {
+            // printf("debug\n");
+            if ((!ft_strchr(line + i, 0) || !ft_strchr(line + i, '\n')) && check_textures_done(textures))
+            {
+                // printf("line: '%s'\n", line);
+                free(line);
+                continue;   
+            }
+            // printf("line::: '%s'\n", line);
+            // if (has_non_space_or_newline(line))
+            //     error = true;
+            // printf("error:%d\n", error);
+            // printf("%s\n", line);
             // free(line);
-            printf("-%s-ddd\n", line);
+            // printf("-%s-ddd\n", line);
             break;
         }
         // else
@@ -144,7 +176,9 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
 {
     char    *line;
     int     i;
+    bool    error;
 
+    error = false;
     i = 1;
 
     if (check_textures_done(main->textures)) // Bu kontrolün doğru olduğundan emin olun
@@ -155,11 +189,17 @@ char get_map_size(t_main *main, int *fd, const char *file_name)
     char *line2;
     while ((line = get_next_line(*fd)))
     {
+        if (has_non_space_or_newline(line))
+                error = true;
+        // printf("error:%d\n", error);
+        // printf("%s\n", line);
         if (*(line2 = ft_strtrim(line, " ")) != '\n')
             break;
         free(line);
         free(line2);
     }
+    if (error)
+        return (EXIT_FAILURE);
     if (line2)
         free(line2);
     while(line)
@@ -228,20 +268,28 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
     }
     while ((line = get_next_line(*fd)) != NULL)
     {
-            
-        if (ft_find_in_str(line, "1 0SNWE\n") || *line == '\n')
-        {
+        printf("line: %s\n");
+        if (ft_find_in_str(line, "1 \n\0")) //buradayım
             free(line);
-            break;
-        }
-        free(line);
+        break;
     }
-    while ((line = get_next_line(*fd)))
-    {
-        if (!ft_find_in_str(line, " \n"))
-            break;
-        free(line);
-    }
+    // while ((line = get_next_line(*fd)) != NULL)
+    // {
+    //     printf("line: %s\n", line);
+    //     if (ft_find_in_str(line, "1 0SNWE\n\0"))
+    //     {
+    //         // free(line);
+    //         break;
+    //     }
+    //     free(line);
+    // }
+    // while ((line = get_next_line(*fd)))
+    // {
+    //     printf("line: %s\n", line);
+    //     if (!ft_find_in_str(line, " \n\0"))
+    //         break;
+    //     free(line);
+    // }
     
     i = 0;
     while (i < main->map->map_max_y && line != NULL)

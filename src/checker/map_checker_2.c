@@ -36,10 +36,14 @@ static void	flf_check_2(t_main *main, int y, int x)
 		return ;
 	if (y >= main->map->map_max_y + 2 || x >= main->map->map_max_x + 2)
 		return ;
-	if (main->map->copy_map[y][x] == 'F' || main->map->copy_map[y][x] == '1')
+	if (main->map->copy_map[y][x] == 'F') // || main->map->copy_map[y][x] == '1')
 		return ;
-    if (main->map->copy_map[y][x] == 'B' || main->map->copy_map[y][x] == ' ')
-    {
+    if (main->map->copy_map[y][x] == '0' && (main->map->copy_map[y - 1][x] == 'B' || main->map->copy_map[y + 1][x] == 'B' || main->map->copy_map[y][x + 1] == 'B' ||main->map->copy_map[y][x-1] == 'B' )) 
+    {	
+		// main->map->copy_map[y][x] = 'X';
+		// printf("x chords: %d\ny chords: %d\ncharacters: %c\n", x, y, main->map->copy_map[y][x]);
+		// print_map(main->map->copy_map);
+		
         printf("Error: Invalid map.\n");
 		free_copy_map(main->map);
 		free_all(main);
