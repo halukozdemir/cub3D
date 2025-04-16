@@ -6,111 +6,92 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 16:50:21 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/11 15:07:57 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:48:28 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
 
-char    check_image(t_textures *textures)
+static char	check_xpm_extension(char *path)
 {
-    if (!textures->no || !textures->so || !textures->we || !textures->ea || !textures->c || !textures->f)
-    {
-        printf("Invalid Map.\n");
-        return (EXIT_FAILURE);
-    }
-    else if ((textures->no[ft_strlen(textures->no) - 1] != 'm' ||
-         textures->no[ft_strlen(textures->no) - 2] != 'p' ||
-         textures->no[ft_strlen(textures->no) - 3] != 'x' ||
-         textures->no[ft_strlen(textures->no) - 4] != '.' ||
-         textures->so[ft_strlen(textures->so) - 1] != 'm' ||
-         textures->so[ft_strlen(textures->so) - 2] != 'p' ||
-         textures->so[ft_strlen(textures->so) - 3] != 'x' ||
-         textures->so[ft_strlen(textures->so) - 4] != '.' ||
-         textures->ea[ft_strlen(textures->ea) - 1] != 'm' ||
-         textures->ea[ft_strlen(textures->ea) - 2] != 'p' ||
-         textures->ea[ft_strlen(textures->ea) - 3] != 'x' ||
-         textures->ea[ft_strlen(textures->ea) - 4] != '.' ||
-         textures->we[ft_strlen(textures->we) - 1] != 'm' ||
-         textures->we[ft_strlen(textures->we) - 2] != 'p' ||
-         textures->we[ft_strlen(textures->we) - 3] != 'x' ||
-         textures->we[ft_strlen(textures->we) - 4] != '.'))
-    {
-        printf("Hatalı xpm dosyası girildi.\n");
-        return (EXIT_FAILURE);
-    }
-    return (EXIT_SUCCESS);
+	int	len;
+
+	len = ft_strlen(path);
+	if (len < 4)
+		return (EXIT_FAILURE);
+	if (path[len - 1] != 'm' || path[len - 2] != 'p'
+		|| path[len - 3] != 'x' || path[len - 4] != '.')
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
-static char check_texture_file(char *filename)
+char	check_image(t_textures *textures)
 {
-    int fd;
-    char buffer[1];
-    ssize_t bytes_read;
-
-    fd = open(filename, O_RDONLY);
-    if (fd < 0)
-    {
-        perror("Texture dosyası açılamadı");
-        return EXIT_FAILURE;
-    }
-    bytes_read = read(fd, buffer, 1);
-    close(fd);
-    if (bytes_read <= 0)
-    {
-        printf("HATA: Texture dosyası boş: \"%s\"\n", filename);
-        return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
+	if (!textures->no || !textures->so || !textures->we
+		|| !textures->ea || !textures->c || !textures->f)
+	{
+		printf("Invalid Map.\n");
+		return (EXIT_FAILURE);
+	}
+	if (check_xpm_extension(textures->no) == EXIT_FAILURE
+		|| check_xpm_extension(textures->so) == EXIT_FAILURE
+		|| check_xpm_extension(textures->we) == EXIT_FAILURE
+		|| check_xpm_extension(textures->ea) == EXIT_FAILURE)
+	{
+		printf("Error: Invalid xpm file.\n");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
-char is_any_texture_file_empty(t_textures *tex)
+static char	check_texture_file(char *filename)
 {
-    if (check_texture_file(tex->no) == EXIT_FAILURE)
-        return EXIT_FAILURE;
-    if (check_texture_file(tex->so) == EXIT_FAILURE)
-        return EXIT_FAILURE;
-    if (check_texture_file(tex->we) == EXIT_FAILURE)
-        return EXIT_FAILURE;
-    if (check_texture_file(tex->ea) == EXIT_FAILURE)
-        return EXIT_FAILURE;
+	int		fd;
+	char	buffer[1];
+	ssize_t	bytes_read;
 
-    return EXIT_SUCCESS;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error: Couldn't open texture file");
+		return (EXIT_FAILURE);
+	}
+	bytes_read = read(fd, buffer, 1);
+	close(fd);
+	if (bytes_read <= 0)
+	{
+		printf("Error: Empty texture file: \"%s\"\n", filename);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
-char    check_color(t_textures *textures)
+char	is_any_texture_file_empty(t_textures *tex)
 {
-    int     temp_d;
-    char    *temp_s;
-    int     i;
+	if (check_texture_file(tex->no) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (check_texture_file(tex->so) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (check_texture_file(tex->we) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (check_texture_file(tex->ea) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
-    i = 0;
-    while (textures->c[i])
-    {
-        temp_d = ft_atoi(textures->c[i]);
-        temp_s = ft_itoa(temp_d);
-        if (ft_strncmp(textures->c[i], temp_s, ft_strlen(temp_s)) || (temp_d < 0 || temp_d >= 255))
-        {
-            printf("Invalid Map.\n");
-            free(temp_s);
-            return (EXIT_FAILURE);
-        }
-        free(temp_s);
-        i++;
-    }
-    i = 0;
-    while (textures->f[i])
-    {
-        temp_d = ft_atoi(textures->f[i]);
-        temp_s = ft_itoa(temp_d);
-        if (ft_strncmp(textures->f[i], temp_s, ft_strlen(temp_s)) || (temp_d < 0 || temp_d >= 255))
-        {
-            printf("Invalid Map.\n");
-            free(temp_s);
-            return (EXIT_FAILURE);
-        }
-        free(temp_s);
-        i++;
-    }
-    return (EXIT_SUCCESS);
+char	check_color_value(char *color_str)
+{
+	int		temp_d;
+	char	*temp_s;
+
+	temp_d = ft_atoi(color_str);
+	temp_s = ft_itoa(temp_d);
+	if (ft_strncmp(color_str, temp_s, ft_strlen(temp_s))
+		|| (temp_d < 0 || temp_d >= 255))
+	{
+		free(temp_s);
+		return (EXIT_FAILURE);
+	}
+	free(temp_s);
+	return (EXIT_SUCCESS);
 }

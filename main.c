@@ -168,9 +168,9 @@ int main(int argc, char **argv)
     // main->player_pos->x = 1 + .5;
     // main->player_pos->y = 1 + .5;
 
-    // main->mlx.last_tick = 0;
-    // // debug_main_info(main);
-    // if (!init_mlx(main, &main->mlx))
-    //     return (0);
+    main->mlx.last_tick = 0;
+    // debug_main_info(main);
+    if (!init_mlx(main, &main->mlx))
+        return (0);
     free_all(main);
 }

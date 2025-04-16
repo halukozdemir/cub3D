@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/11 16:44:20 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:50:08 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ char init_map(t_map *map)
 char fill_map_struct(t_main *main, int *fd, const char *file_name)
 {
     char    *line;
+    char    *trimmed_line;
     int     i;
     *fd = open(file_name, O_RDWR);
     if (fd < 0)
@@ -268,9 +269,15 @@ char fill_map_struct(t_main *main, int *fd, const char *file_name)
     }
     while ((line = get_next_line(*fd)) != NULL)
     {
-        printf("line: %s\n");
-        if (ft_find_in_str(line, "1 \n\0")) //buradayım
+        trimmed_line = ft_strtrim(line, " ");
+        // printf("%s\n", trimmed_line);
+        if (*trimmed_line == 'F' || *trimmed_line == 'C' || *trimmed_line == 'N' || *trimmed_line == 'S' || *trimmed_line == 'E' || *trimmed_line == 'W' || *trimmed_line == '\n')
+        {
+            free(trimmed_line);
             free(line);
+            continue;
+        }
+        free(trimmed_line);
         break;
     }
     // while ((line = get_next_line(*fd)) != NULL)

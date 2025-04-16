@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/11 15:08:04 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:48:31 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,10 +176,12 @@ void	flood_fill_2(t_main *main);
 
 
 //image_checker.c
-char    check_image(t_textures *textures);
-char    check_color(t_textures *textures);
-char is_any_texture_file_empty(t_textures *tex);
+char	check_image(t_textures *textures);
+char	is_any_texture_file_empty(t_textures *tex);
+char	check_color_value(char *color_str);
 
+//image_checker_2.c
+char	check_color(t_textures *textures);
 
 
 //clean_up.c
