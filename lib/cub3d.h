@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/16 15:48:31 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:36:19 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,9 +166,14 @@ char	**ft_realloc(char **array, char *new_element);
 char	ft_is_empty_line(char *line);
 int count_char(const char *str, char c);
 
-//map_checker.c
-void	flood_fill(t_main *main);
+//flood_fill_v1.c
+void	flood_fill(t_main *game);
+void	copy_row(char *dest, char *src);
+
+//flood_fill_v1_2.c
+void	player_pos(t_main *main);
 char	**ft_map_dup(char **src);
+
 
 //map_checker_2.c
 void	flood_fill_2(t_main *main);
@@ -185,16 +190,17 @@ char	check_color(t_textures *textures);
 
 
 //clean_up.c
+void	free_copy_map(t_map *map);
 void	free_map(t_map *map);
-void free_textures(t_textures *textures);
-void    free_all(t_main *main);
-void free_copy_map(t_map *map);
-
-void print_map(char **map);
+void	free_textures(t_textures *textures);
+void	free_all(t_main *main);
 
 
 //mlx.c
-char    init_mlx(t_main *main, t_mlx *mlx);
+unsigned long long	get_timestamp(void);
+int	render(void *param);
+int	key_press(int keycode, void *main);
+void	display(t_main *main);
 
 //player.c
 bool get_player_pos(t_main *main);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker.c                                      :+:      :+:    :+:   */
+/*   flood_fill_v1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:49:18 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/16 15:58:42 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:30:04 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,6 @@
 
 static void	f_fill(t_map *map, int y, int x);
 static void	flf_check(t_main *main);
-static void	copy_row(char *dest, char *src);
-
-void	player_pos(t_main *main)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	main->player_pos->count = 0;
-	while (main->map->map[++i])
-	{
-		j = -1;
-		while (main->map->map[i][++j])
-		{
-			if (ft_strchr("NSEW", main->map->map[i][j]))
-			{
-				main->player_pos->x = j;
-				main->player_pos->y = i;
-				main->player_pos->count++;
-			}
-		}
-	}
-}
 
 void	flood_fill(t_main *game)
 {
@@ -87,7 +64,7 @@ static void	flf_check(t_main *main)
 	}
 }
 
-static void	copy_row(char *dest, char *src)
+void	copy_row(char *dest, char *src)
 {
 	int	j;
 
@@ -95,27 +72,4 @@ static void	copy_row(char *dest, char *src)
 	while (src[++j])
 		dest[j] = src[j];
 	dest[j] = '\0';
-}
-
-char	**ft_map_dup(char **src)
-{
-	char	**dest;
-	int		i;
-
-	i = 0;
-	while (src[i])
-		i++;
-	dest = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!dest)
-		return (NULL);
-	i = -1;
-	while (src[++i])
-	{
-		dest[i] = (char *)malloc(sizeof(char) * (ft_strlen(src[i]) + 1));
-		if (!dest[i])
-			return (NULL);
-		copy_row(dest[i], src[i]);
-	}
-	dest[i] = NULL;
-	return (dest);
 }

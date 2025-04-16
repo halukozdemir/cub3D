@@ -170,7 +170,7 @@ int main(int argc, char **argv)
 
     main->mlx.last_tick = 0;
     // debug_main_info(main);
-    if (!init_mlx(main, &main->mlx))
+    if (!init_mlx(main))
         return (0);
     free_all(main);
 }
