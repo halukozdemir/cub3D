@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:49:18 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/16 16:30:04 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:43:31 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	f_fill(t_map *map, int y, int x)
 	f_fill(map, y, x + 1);
 }
 
-static void	check_map_error(t_main *main, int i, int j)
+static void	check_flood_error(t_main *main, int i, int j)
 {
 	if (ft_strchr("10", main->map->copy_map[i][j])
 		|| main->player_pos->count > 1)
@@ -60,7 +60,7 @@ static void	flf_check(t_main *main)
 	{
 		j = -1;
 		while (main->map->copy_map[i][++j])
-			check_map_error(main, i, j);
+			check_flood_error(main, i, j);
 	}
 }
 

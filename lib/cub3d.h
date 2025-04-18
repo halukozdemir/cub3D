@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/16 17:36:19 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:55:19 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 #include <math.h>
 #include <stdbool.h> 
 #include <unistd.h>
+
 
 typedef struct s_map
 {
@@ -129,7 +130,26 @@ typedef struct s_keys
 	int			right_pressed;
 	int			esc_pressed;
 }	t_keys;
+typedef struct s_main t_main; // Forward declaration
 
+typedef struct s_map_size_params
+{
+	t_main	*m;
+	int		*fd;
+	char	*line;
+	char	*trimmed;
+	bool	err;
+}	t_map_size_params;
+
+typedef struct s_line_parse
+{
+	t_textures	*textures;
+	char		*line;
+	int			index;
+}				t_line_parse;
+
+// Fonksiyon prototipleri
+// Şimdi t_main'in tam tanımı
 typedef struct s_main
 {
 	t_mlx		mlx;
@@ -138,27 +158,32 @@ typedef struct s_main
 	t_keys		keys;
 	t_textures	*textures;
 	t_positon	*player_pos;
-}				t_main;
+}	t_main;
 
+int	has_non_space_or_newline(const char *str);
 
-//parser_utils.c
-char	ft_find_in_str(char *line, char *str);
-char	skip_whitespaces(char *str, int *i);
-char	check_textures_done(t_textures *textures);
-char	check_fill_done(t_textures *textures);
+// Fonksiyon prototipleri
+bool check_map_error(t_main *main, char *line, bool *error);
+void process_map_line(t_main *main, char *line, int *i);
+int skip_identifiers(int fd, char **line);
 
+// parser.c
+int	fill_map_struct(t_main *main, int *fd, const char *file_name);
 
-//fill_struct.c
-int		fill_textures_struct(t_textures *textures, const char *file_name);
-char	get_map_size(t_main *main, int *d, const char *file_name);
-char	fill_map_struct(t_main *main, int *fd, const char *file_name);
-int has_non_space_or_newline(const char *str);
+// mlx.c
+char    init_mlx(t_main *main, t_mlx *mlx);
 
 
 //init.c
 t_textures	*init_textures_struct(void);
 t_main		*init_all();
 t_map		*init_map_struct(void);
+
+//parser_utils.c
+char	ft_find_in_str(char *line, char *str);
+char	skip_whitespaces(char *str, int *i);
+char	check_textures_done(t_textures *textures);
+char	check_fill_done(t_textures *textures);
 
 //parser_utils2.c
 char    cf_count_checker(t_textures *textures);
@@ -205,5 +230,11 @@ void	display(t_main *main);
 //player.c
 bool get_player_pos(t_main *main);
 
+//player_dir.c
+void	set_dir_values(t_positon *pos, float dir[2], float plane[2]);
+void	set_north_direction(float dir[2], float plane[2]);
+void	set_south_direction(float dir[2], float plane[2]);
+void	set_east_direction(float dir[2], float plane[2]);
+void	set_west_direction(float dir[2], float plane[2]);
 
 #endif
