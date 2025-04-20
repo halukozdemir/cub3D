@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:46:03 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/16 15:46:56 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/20 18:03:38 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	check_color(t_textures *textures)
 	{
 		if (check_color_value(textures->c[i]) == EXIT_FAILURE)
 		{
-			printf("Invalid Map.\n");
+			printf("Error: Invalid map.\n");
 			return (EXIT_FAILURE);
 		}
 		i++;
@@ -31,7 +31,7 @@ char	check_color(t_textures *textures)
 	{
 		if (check_color_value(textures->f[i]) == EXIT_FAILURE)
 		{
-			printf("Invalid Map.\n");
+			printf("Error: Invalid map.\n");
 			return (EXIT_FAILURE);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/18 19:55:19 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/20 18:08:51 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # define HEIGHT 720
 # define WIDTH 1280
 # define BUFFER_SIZE 1
-
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
@@ -24,217 +23,178 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_ESC 65307
-
-# define MOVE_SPEED  3
+# define MOVE_SPEED 3
 # define ROTATION_SPEED 1
 
-#include "minilibx/mlx.h"
-#include <sys/time.h>
-#include "libft/libft.h"
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h> //kaldırmayı dene
-#include <math.h>
-#include <stdbool.h> 
-#include <unistd.h>
-
+# include "libft/libft.h"
+# include "minilibx/mlx.h"
+# include <fcntl.h>
+# include <math.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_map
 {
-	char	**map;
-	char	**copy_map;
-	int		map_max_x;
-	int		map_max_y;
-
-}				t_map;
+	char				**map;
+	char				**copy_map;
+	int					map_max_x;
+	int					map_max_y;
+}						t_map;
 
 typedef struct s_ray
 {
-	double	camera_x;
-	double	raydir_x;
-	double	raydir_y;
-	double	deltadist_x;
-	double	deltadist_y;
-	double	sidedist_x;
-	double	sidedist_y;
-	double	perpwall_dist;
-	double	wall_x;
-	double	textpos;
-	double	textstep;
-	int		texture_x;
-	int		draw_start;
-	int		draw_end;
-	int		line_height;
-	int		step_x;
-	int		step_y;
-	int		map_x;
-	int		map_y;
-	int		side;
-	int		hit;
-	int		x;
-}	t_ray;
+	double				camera_x;
+	double				raydir_x;
+	double				raydir_y;
+	double				deltadist_x;
+	double				deltadist_y;
+	double				sidedist_x;
+	double				sidedist_y;
+	double				perpwall_dist;
+	double				wall_x;
+	double				textpos;
+	double				textstep;
+	int					texture_x;
+	int					draw_start;
+	int					draw_end;
+	int					line_height;
+	int					step_x;
+	int					step_y;
+	int					map_x;
+	int					map_y;
+	int					side;
+	int					hit;
+	int					x;
+}						t_ray;
 
 typedef struct s_textures
 {
-	char	*keys;
-    char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	int		*textures;
-	char	**c;
-	char	**f;
-}               t_textures;
+	char				*keys;
+	char				*no;
+	char				*so;
+	char				*we;
+	char				*ea;
+	int					*textures;
+	char				**c;
+	char				**f;
+}						t_textures;
 
 typedef struct s_image
 {
-	void	*img;
-	void	*addr;
-	int		bpp;
-	int		size_line;
-	int		endian;
-	int		width;
-	int		height;
-}	t_image;
+	void				*img;
+	void				*addr;
+	int					bpp;
+	int					size_line;
+	int					endian;
+	int					width;
+	int					height;
+}						t_image;
 
 typedef struct s_mlx
 {
-	void	*mlx;
-	void	*win;
-	t_image	image;
-	t_image	so_text;
-	t_image	we_text;
-	t_image	no_text;
-	t_image	ea_text;
+	void				*mlx;
+	void				*win;
+	t_image				image;
+	t_image				so_text;
+	t_image				we_text;
+	t_image				no_text;
+	t_image				ea_text;
 	unsigned long long	last_tick;
-}	t_mlx;
+}						t_mlx;
 
 typedef struct s_position
 {
-	double		x;
-	double		y;
-	double		dirx;
-	double		diry;
-	double		planex;
-	double		planey;
-	int			count;
-}				t_positon;
+	double				x;
+	double				y;
+	double				dirx;
+	double				diry;
+	double				planex;
+	double				planey;
+	int					count;
+}						t_positon;
 
 typedef struct s_keys
 {
-	int			w_pressed;
-	int			s_pressed;
-	int			a_pressed;
-	int			d_pressed;
-	int			left_pressed;
-	int			right_pressed;
-	int			esc_pressed;
-}	t_keys;
-typedef struct s_main t_main; // Forward declaration
+	int					w_pressed;
+	int					s_pressed;
+	int					a_pressed;
+	int					d_pressed;
+	int					left_pressed;
+	int					right_pressed;
+	int					esc_pressed;
+}						t_keys;
 
+typedef struct s_main	t_main;
 typedef struct s_map_size_params
 {
-	t_main	*m;
-	int		*fd;
-	char	*line;
-	char	*trimmed;
-	bool	err;
-}	t_map_size_params;
+	t_main				*m;
+	int					*fd;
+	char				*line;
+	char				*trimmed;
+	bool				err;
+}						t_map_size_params;
 
 typedef struct s_line_parse
 {
-	t_textures	*textures;
-	char		*line;
-	int			index;
-}				t_line_parse;
+	t_textures			*textures;
+	char				*line;
+	int					index;
+}						t_line_parse;
 
-// Fonksiyon prototipleri
-// Şimdi t_main'in tam tanımı
 typedef struct s_main
 {
-	t_mlx		mlx;
-	t_ray		ray;
-	t_map		*map;
-	t_keys		keys;
-	t_textures	*textures;
-	t_positon	*player_pos;
-}	t_main;
+	t_mlx				mlx;
+	t_ray				ray;
+	t_map				*map;
+	t_keys				keys;
+	t_textures			*textures;
+	t_positon			*player_pos;
+}						t_main;
 
-int	has_non_space_or_newline(const char *str);
-
-// Fonksiyon prototipleri
-bool check_map_error(t_main *main, char *line, bool *error);
-void process_map_line(t_main *main, char *line, int *i);
-int skip_identifiers(int fd, char **line);
-
-// parser.c
-int	fill_map_struct(t_main *main, int *fd, const char *file_name);
-
-// mlx.c
-char    init_mlx(t_main *main, t_mlx *mlx);
-
-
-//init.c
-t_textures	*init_textures_struct(void);
-t_main		*init_all();
-t_map		*init_map_struct(void);
-
-//parser_utils.c
-char	ft_find_in_str(char *line, char *str);
-char	skip_whitespaces(char *str, int *i);
-char	check_textures_done(t_textures *textures);
-char	check_fill_done(t_textures *textures);
-
-//parser_utils2.c
-char    cf_count_checker(t_textures *textures);
-char	**ft_realloc(char **array, char *new_element);
-char	ft_is_empty_line(char *line);
-int count_char(const char *str, char c);
-
-//flood_fill_v1.c
-void	flood_fill(t_main *game);
-void	copy_row(char *dest, char *src);
-
-//flood_fill_v1_2.c
-void	player_pos(t_main *main);
-char	**ft_map_dup(char **src);
-
-
-//map_checker_2.c
-void	flood_fill_2(t_main *main);
-
-
-
-//image_checker.c
-char	check_image(t_textures *textures);
-char	is_any_texture_file_empty(t_textures *tex);
-char	check_color_value(char *color_str);
-
-//image_checker_2.c
-char	check_color(t_textures *textures);
-
-
-//clean_up.c
-void	free_copy_map(t_map *map);
-void	free_map(t_map *map);
-void	free_textures(t_textures *textures);
-void	free_all(t_main *main);
-
-
-//mlx.c
-unsigned long long	get_timestamp(void);
-int	render(void *param);
-int	key_press(int keycode, void *main);
-void	display(t_main *main);
-
-//player.c
-bool get_player_pos(t_main *main);
-
-//player_dir.c
-void	set_dir_values(t_positon *pos, float dir[2], float plane[2]);
-void	set_north_direction(float dir[2], float plane[2]);
-void	set_south_direction(float dir[2], float plane[2]);
-void	set_east_direction(float dir[2], float plane[2]);
-void	set_west_direction(float dir[2], float plane[2]);
+int						has_non_space_or_newline(const char *str);
+bool					check_map_error(t_main *main, char *line, bool *error);
+void					process_map_line(t_main *main, char *line, int *i);
+int						skip_identifiers(int fd, char **line);
+int						fill_map_struct(t_main *main, int *fd,
+							const char *file_name);
+char					init_mlx(t_main *main, t_mlx *mlx);
+t_textures				*init_textures_struct(void);
+t_main					*init_all(char *map_name);
+t_map					*init_map_struct(void);
+char					ft_find_in_str(char *line, char *str);
+char					skip_whitespaces(char *str, int *i);
+char					check_textures_done(t_textures *textures);
+char					check_fill_done(t_textures *textures);
+char					cf_count_checker(t_textures *textures);
+char					**ft_realloc(char **array, char *new_element);
+char					ft_is_empty_line(char *line);
+int						count_char(const char *str, char c);
+void					flood_fill(t_main *game);
+void					copy_row(char *dest, char *src);
+void					player_pos(t_main *main);
+char					**ft_map_dup(char **src);
+void					flood_fill_2(t_main *main);
+char					check_image(t_textures *textures);
+char					is_any_texture_file_empty(t_textures *tex);
+char					check_color_value(char *color_str);
+char					check_color(t_textures *textures);
+void					free_copy_map(t_map *map);
+void					free_map(t_map *map);
+void					free_textures(t_textures *textures);
+void					free_all(t_main *main);
+unsigned long long		get_timestamp(void);
+int						render(void *param);
+int						key_press(int keycode, void *main);
+void					display(t_main *main);
+bool					get_player_pos(t_main *main);
+void					set_dir_values(t_positon *pos, float dir[2],
+							float plane[2]);
+void					set_north_direction(float dir[2], float plane[2]);
+void					set_south_direction(float dir[2], float plane[2]);
+void					set_east_direction(float dir[2], float plane[2]);
+void					set_west_direction(float dir[2], float plane[2]);
 
 #endif
