@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 18:36:37 by halozdem          #+#    #+#             */
-/*   Updated: 2023/12/23 16:44:14 by halozdem         ###   ########.fr       */
+/*   Created: 2024/10/08 12:44:22 by gbodur            #+#    #+#             */
+/*   Updated: 2024/10/18 16:29:00 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t	i;
+	const unsigned char	*ptr1;
+	const unsigned char	*ptr2;
 
-	i = 0;
-	if (n == 0)
+	ptr1 = (const unsigned char *) s1;
+	ptr2 = (const unsigned char *) s2;
+	if (!n)
 		return (0);
-	while ((i < n) && (s1[i] || s2[i]))
+	while ((n - 1) && *ptr1 && *ptr2)
 	{
-		if (s1[i] != s2[i])
-			return (((unsigned char)s1[i] - (unsigned char)s2[i]));
-		i++;
+		if (*ptr1 > *ptr2)
+			return (*ptr1 - *ptr2);
+		if (*ptr1 < *ptr2)
+			return (*ptr1 - *ptr2);
+		ptr1++;
+		ptr2++;
+		n--;
 	}
-	return (0);
+	return (*ptr1 - *ptr2);
 }

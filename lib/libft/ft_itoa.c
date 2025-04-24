@@ -3,67 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 15:20:07 by halozdem          #+#    #+#             */
-/*   Updated: 2023/12/23 16:56:04 by halozdem         ###   ########.fr       */
+/*   Created: 2024/10/18 14:06:09 by gbodur            #+#    #+#             */
+/*   Updated: 2024/10/20 14:41:36 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static long int	leng(long a)
+static int	count_digits(long num)
 {
-	int	count;
+	int	digits;
 
-	count = 0;
-	if (a < 0)
-		count = 1;
-	while (a >= 10 || a <= -10)
+	digits = 1;
+	if (num < 0)
 	{
-		a = a / 10;
-		count++;
+		num *= -1;
 	}
-	count++;
-	return (count);
-}
-
-static char	*convert(char *s, long number, long len)
-{
-	s[len] = '\0';
-	if (number == 0)
+	while (num > 9)
 	{
-		s[--len] = '0';
-		return (s);
+		num /= 10;
+		digits++;
 	}
-	while (number > 0)
-	{
-		s[--len] = 48 + (number % 10);
-		number = number / 10;
-	}
-	return (s);
+	return (digits);
 }
 
 char	*ft_itoa(int n)
 {
-	long	nb;
-	long	len;
-	char	*str;
+	char	*number;
+	int		digits;
+	long	num;
+	int		sign;
 
-	nb = 0;
-	len = leng(n);
-	str = malloc(sizeof(char) * len + 1);
-	if (!str)
-		return (NULL);
-	if (n == 0)
-		str[0] = '0';
-	else if (n < 0)
+	num = n;
+	sign = 0;
+	digits = count_digits(num);
+	if (num < 0 && ++digits)
 	{
-		nb = (((long)n) * -1);
-		str[0] = '-';
+		num *= -1;
+		sign = -1;
 	}
-	else
-		nb = n;
-	str = convert(str, nb, len);
-	return (str);
+	number = (char *) malloc (sizeof(char) * digits + 1);
+	if (!number)
+		return (NULL);
+	number[digits] = 0;
+	while (digits)
+	{
+		number[digits-- - 1] = (num % 10) + 48;
+		num /= 10;
+	}
+	if (sign == -1)
+		number[0] = '-';
+	return (number);
 }

@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 16:50:21 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/20 18:03:43 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:38:19 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ char	check_color_value(char *color_str)
 	temp_d = ft_atoi(color_str);
 	temp_s = ft_itoa(temp_d);
 	if (ft_strncmp(color_str, temp_s, ft_strlen(temp_s))
-		|| (temp_d < 0 || temp_d >= 255))
+		|| (temp_d < 0 || temp_d > 255))
 	{
 		free(temp_s);
 		return (EXIT_FAILURE);
 	}
 	free(temp_s);
+	temp_s = NULL;
 	return (EXIT_SUCCESS);
 }

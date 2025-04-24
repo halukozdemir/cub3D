@@ -6,31 +6,44 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/18 19:44:22 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:19:28 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
 
-char	get_map_size(t_main *main, int *fd, const char *file_name)
+static char	find_valid_map_start(t_main *main, int *fd, char **line,
+		bool *error)
+{
+	char	*str;
+
+	*error = false;
+	*line = get_next_line(*fd);
+	str = ft_strtrim(*line, " ");
+	while (*line && *str == '\n')
+	{
+		free(str);
+		if (check_map_error(main, *line, error))
+			return (free(*line), EXIT_FAILURE);
+		free(*line);
+		*line = get_next_line(*fd);
+		str = ft_strtrim(*line, " ");
+	}
+	free(str);
+	if (*error)
+		return (free(*line), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+char	get_map_size(t_main *main, int *fd)
 {
 	char	*line;
-	char	*line2;
 	int		i;
 	bool	error;
 
-	error = false;
+	if (find_valid_map_start(main, fd, &line, &error) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	i = 1;
-	line = get_next_line(*fd);
-	while (line && *ft_strtrim(line, " ") == '\n')
-	{
-		if (check_map_error(main, line, &error))
-			return (free(line), EXIT_FAILURE);
-		free(line);
-		line = get_next_line(*fd);
-	}
-	if (error)
-		return (free(line), EXIT_FAILURE);
 	while (line)
 	{
 		process_map_line(main, line, &i);
@@ -38,7 +51,8 @@ char	get_map_size(t_main *main, int *fd, const char *file_name)
 		line = get_next_line(*fd);
 	}
 	main->map->map_max_y = i;
-	return ((close(*fd)), EXIT_SUCCESS);
+	close(*fd);
+	return (EXIT_SUCCESS);
 }
 
 int	fill_map_struct(t_main *main, int *fd, const char *file_name)

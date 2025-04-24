@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 19:27:10 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/18 19:27:14 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:21:40 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,11 @@ int	has_non_space_or_newline(const char *str)
 static int	process_line(t_textures *textures, char *line)
 {
 	t_line_parse	p;
-	int				result;
 
 	p = (t_line_parse){textures, line, 0};
 	skip_whitespaces(p.line, &p.index);
 	if (process_texture_lines(&p))
-	{
 		return (1);
-	}
 	if (!ft_find_in_str(p.line, p.textures->keys) && !ft_strchr(p.line
 			+ p.index, '\n'))
 	{
@@ -51,7 +48,10 @@ int	fill_textures_struct(t_textures *textures, const char *file_name)
 
 	fd = open(file_name, O_RDWR, 0777);
 	if (fd < 0)
-		return (perror("Harita dosyası okunamadı.\n"), -1);
+	{
+		perror("Error: Couldn't open texture file");
+		return (-1);
+	}
 	while (1)
 	{
 		line = get_next_line(fd);

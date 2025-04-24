@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/14 18:28:55 by halozdem          #+#    #+#             */
-/*   Updated: 2023/12/18 13:51:03 by halozdem         ###   ########.fr       */
+/*   Created: 2024/10/15 16:36:53 by gbodur            #+#    #+#             */
+/*   Updated: 2024/10/20 11:57:32 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,21 @@
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	i;
-	size_t	len;
 	char	*str;
-	int		m;
-	int		k;
+	size_t	first;
+	size_t	last;
 
-	len = ft_strlen(s1);
-	if (!s1)
+	if (!s1 || !set)
 		return (NULL);
-	if (!set)
-		return ((char *)s1);
-	i = 0;
-	while (s1[i] != '\0' && ft_strchr(set, s1[i]))
-		i++;
-	while (len > i + 1 && ft_strchr(set, s1[len - 1]))
-		len--;
-	str = ft_calloc((len - i + 1), sizeof(char));
+	first = 0;
+	last = ft_strlen(s1);
+	while (s1[first] && ft_strchr(set, s1[first]))
+		first++;
+	while (last > first && ft_strchr(set, s1[last - 1]))
+		last--;
+	str = (char *)malloc(sizeof(char) * (last - first + 1));
 	if (!str)
-		return (0);
-	m = len - i;
-	k = 0;
-	while (k < m)
-		str[k++] = s1[i++];
+		return (NULL);
+	ft_strlcpy (str, &s1[first], last - first + 1);
 	return (str);
 }

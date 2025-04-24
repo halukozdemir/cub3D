@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:09 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/20 18:02:36 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:20:08 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,44 @@ t_map	*init_map_struct(void)
 	return (map);
 }
 
-t_main	*init_all(char *map_name)
+void	init_keys(t_keys *keys)
+{
+	if (keys == NULL)
+		return ;
+	keys->w_pressed = 0;
+	keys->s_pressed = 0;
+	keys->a_pressed = 0;
+	keys->d_pressed = 0;
+	keys->left_pressed = 0;
+	keys->right_pressed = 0;
+	keys->esc_pressed = 0;
+}
+
+t_main	*init_all()
 {
 	t_main	*main;
 
-	main = malloc(sizeof(t_main));
+	main = ft_calloc(sizeof(t_main), 1);
 	if (!main)
 		return (NULL);
 	main->player_pos = (t_positon *)malloc(sizeof(t_positon));
 	if (!main->player_pos)
-		return (NULL);
+		return (free(main), NULL);
 	main->player_pos->x = -1;
 	main->player_pos->y = -1;
 	main->player_pos->count = 0;
+	init_keys(&main->keys);
 	main->textures = init_textures_struct();
 	if (!main->textures)
-		return (free(main), NULL);
+		return (free(main->player_pos), free(main), NULL);
 	main->map = init_map_struct();
 	if (!main->map)
-		return (free(main->textures->textures), free(main->textures),
-			free(main), NULL);
+	{
+		free(main->textures->textures);
+		free(main->textures->keys);
+		free(main->textures);
+		free(main->player_pos);
+		return (free(main), NULL);
+	}
 	return (main);
 }

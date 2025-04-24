@@ -6,93 +6,71 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:07:08 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/16 16:08:00 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:22:49 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
 
-void	free_copy_map(t_map *map)
+static void	destroy_images(t_mlx *mlx)
 {
-	int	i;
-
-	i = 0;
-	if (!map || !map->copy_map)
-		return ;
-	while (map->copy_map[i])
-	{
-		free(map->copy_map[i]);
-		i++;
-	}
-	free(map->copy_map);
-	map->copy_map = NULL;
+	if (mlx->image.img)
+		mlx_destroy_image(mlx->mlx, mlx->image.img);
+	if (mlx->so_text.img)
+		mlx_destroy_image(mlx->mlx, mlx->so_text.img);
+	if (mlx->we_text.img)
+		mlx_destroy_image(mlx->mlx, mlx->we_text.img);
+	if (mlx->no_text.img)
+		mlx_destroy_image(mlx->mlx, mlx->no_text.img);
+	if (mlx->ea_text.img)
+		mlx_destroy_image(mlx->mlx, mlx->ea_text.img);
 }
 
-void	free_map(t_map *map)
+void	clean_mlx(t_mlx *mlx)
 {
-	int	i;
-
-	i = 0;
-	if (!map)
+	if (!mlx || !mlx->mlx)
 		return ;
-	if (map->map)
-	{
-		while (map->map[i])
-		{
-			free(map->map[i]);
-			i++;
-		}
-		free(map->map);
-		map->map = NULL;
-	}
-	free(map);
+	destroy_images(mlx);
+	if (mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
+	mlx_destroy_display(mlx->mlx);
+	free(mlx->mlx);
+	mlx->mlx = NULL;
 }
 
-static void	free_texture_array(char **array)
+void	free_2d_array(char **array)
 {
 	int	i;
 
-	i = 0;
 	if (!array)
 		return ;
+	i = 0;
 	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
+		free(array[i++]);
 	free(array);
 }
 
-void	free_textures(t_textures *textures)
+void	free_texture_paths(t_textures *t)
 {
-	if (!textures)
+	if (!t)
 		return ;
-	if (textures->no)
-		free(textures->no);
-	if (textures->so)
-		free(textures->so);
-	if (textures->we)
-		free(textures->we);
-	if (textures->ea)
-		free(textures->ea);
-	free_texture_array(textures->c);
-	free_texture_array(textures->f);
-	if (textures->keys)
-		free(textures->keys);
-	if (textures->textures)
-		free(textures->textures);
-	free(textures);
+	free(t->no);
+	free(t->so);
+	free(t->we);
+	free(t->ea);
+	free_2d_array(t->c);
+	free_2d_array(t->f);
+	free(t->keys);
+	free(t->textures);
 }
 
 void	free_all(t_main *main)
 {
 	if (!main)
 		return ;
-	if (main->textures)
-		free_textures(main->textures);
-	if (main->map)
-		free_map(main->map);
-	if (main->player_pos)
-		free(main->player_pos);
+	free_map(main->map);
+	free_textures(main->textures);
+	free(main->player_pos);
+	clean_mlx(&main->mlx);
 	free(main);
 }

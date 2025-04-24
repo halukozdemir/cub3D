@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill_v1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:49:18 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/18 19:43:31 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:15:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,14 @@ static void	f_fill(t_map *map, int y, int x)
 
 static void	check_flood_error(t_main *main, int i, int j)
 {
-	if (ft_strchr("10", main->map->copy_map[i][j])
-		|| main->player_pos->count > 1)
+	if (main->player_pos->count > 1)
+	{
+		printf("Error: Multiple player positions found in map.\n");
+		free_copy_map(main->map);
+		free_all(main);
+		exit(1);
+	}
+	if (ft_strchr("10", main->map->copy_map[i][j]))
 	{
 		printf("Error: Invalid map.\n");
 		free_copy_map(main->map);
