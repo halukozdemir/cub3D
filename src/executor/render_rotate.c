@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_rotate.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/24 21:41:11 by halozdem          #+#    #+#             */
+/*   Updated: 2025/04/24 21:41:11 by halozdem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../lib/cub3d.h"
 
-void    if_condition(t_main *main, const double angle, const double delta_time)
+void	if_condition(t_main *main, const double angle, const double delta_time)
 {
 	if (main == NULL)
 		return ;
-    if (main->keys.w_pressed)
+	if (main->keys.w_pressed)
 		move_forward(main, delta_time);
 	if (main->keys.s_pressed)
 		move_backward(main, delta_time);
@@ -25,14 +37,14 @@ void	rotate_right(t_main *main, const double angle)
 
 	olddirx = main->player_pos->dirx;
 	oldplanex = main->player_pos->planex;
-	main->player_pos->dirx = olddirx * cos(angle) \
-		- main->player_pos->diry * sin(angle);
-	main->player_pos->diry = olddirx * sin(angle) \
-		+ main->player_pos->diry * cos(angle);
-	main->player_pos->planex = oldplanex * cos(angle) \
-		- main->player_pos->planey * sin(angle);
-	main->player_pos->planey = oldplanex * sin(angle) \
-		+ main->player_pos->planey * cos(angle);
+	main->player_pos->dirx = olddirx * cos(angle) - main->player_pos->diry
+		* sin(angle);
+	main->player_pos->diry = olddirx * sin(angle) + main->player_pos->diry
+		* cos(angle);
+	main->player_pos->planex = oldplanex * cos(angle) - main->player_pos->planey
+		* sin(angle);
+	main->player_pos->planey = oldplanex * sin(angle) + main->player_pos->planey
+		* cos(angle);
 }
 
 void	rotate_left(t_main *main, const double angle)
@@ -42,12 +54,12 @@ void	rotate_left(t_main *main, const double angle)
 
 	olddirx = main->player_pos->dirx;
 	oldplanex = main->player_pos->planex;
-	main->player_pos->dirx = olddirx * cos(-angle) \
-		- main->player_pos->diry * sin(-angle);
-	main->player_pos->diry = olddirx * sin(-angle) \
-		+ main->player_pos->diry * cos(-angle);
-	main->player_pos->planex = oldplanex * cos(-angle) \
+	main->player_pos->dirx = olddirx * cos(-angle) - main->player_pos->diry
+		* sin(-angle);
+	main->player_pos->diry = olddirx * sin(-angle) + main->player_pos->diry
+		* cos(-angle);
+	main->player_pos->planex = oldplanex * cos(-angle)
 		- main->player_pos->planey * sin(-angle);
-	main->player_pos->planey = oldplanex * sin(-angle) \
+	main->player_pos->planey = oldplanex * sin(-angle)
 		+ main->player_pos->planey * cos(-angle);
 }

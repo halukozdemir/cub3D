@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:37:34 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/23 18:36:45 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/24 21:42:06 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
 
-void    display(t_main *main);
+void				display(t_main *main);
 
 unsigned long long	get_timestamp(void)
 {
@@ -68,7 +68,8 @@ int	key_release(int keycode, void *param)
 
 int	rgbtouint(char **colors)
 {
-	return (ft_atoi(colors[0]) * 65536 + ft_atoi(colors[1]) * 256 + ft_atoi(colors[2]));
+	return (ft_atoi(colors[0]) * 65536 + ft_atoi(colors[1]) * 256
+		+ ft_atoi(colors[2]));
 }
 
 t_image	*get_texture(t_mlx *mlx, t_ray *ray)
