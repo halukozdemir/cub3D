@@ -25,7 +25,7 @@ void	check_texture_file(const char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		fprintf(stderr, "Error: Unable to open texture file '%s'.\n", path);
+		printf("Error: Unable to open texture file.\n");
 		exit(1);
 	}
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:36:47 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:26:27 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:05:35 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	validate_color_value(int color_value, int color_count)
 {
 	if (color_value < 0 || color_value > 255 || color_count != 2)
 	{
-		fprintf(stderr, "Error: Invalid color value.\n");
+		printf("Error: Invalid color value.\n");
 		exit(1);
 	}
 }

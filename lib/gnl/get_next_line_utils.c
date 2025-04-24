@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enbuyuk <enbuyuk@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 13:48:31 by enbuyuk           #+#    #+#             */
-/*   Updated: 2025/01/08 04:12:16 by enbuyuk          ###   ########.fr       */
+/*   Created: 2025/04/24 18:54:15 by halozdem          #+#    #+#             */
+/*   Updated: 2025/04/24 18:54:18 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -2,19 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   special_cont.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2025/04/24 16:23:42 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 16:23:42 by halozdem         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/24 19:00:37 by halozdem          #+#    #+#             */
+/*   Updated: 2025/04/24 19:00:37 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
-#include <ctype.h>
 
 static void	check_color_values(const char *buffer, int *i)
 {
@@ -81,7 +77,7 @@ void	process_buffer(char *buffer, int *map_section_started)
 		else if (!*map_section_started && buffer[i] == '1')
 			*map_section_started = check_map_start(buffer, i);
 		else if (*map_section_started && buffer[i] != '\n'
-			&& !isspace(buffer[i]))
+			&& !ft_isspace(buffer[i]))
 			validate_map_char(buffer[i]);
 		i++;
 	}
