@@ -96,7 +96,7 @@ int	render(void *param)
 	if (main->keys.esc_pressed)
 	{
 		free_all(main);
-		exit(1);
+		exit(0);
 	}
 	display(main);
 	return (1);

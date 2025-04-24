@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 17:42:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:33:11 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:46:09 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ static int	handle_textures(t_main *main, char *path)
 	fd = fill_textures_struct(main->textures, path);
 	if (fd == -1)
 	{
-		fprintf(stderr, "Error: Invalid map.\n");
+		printf("Error: Invalid map.\n");
 		free_all(main);
 		return (1);
 	}
 	if (check_image(main->textures) || check_color(main->textures)
 		|| is_any_texture_file_empty(main->textures))
 	{
-		fprintf(stderr, "Error: Texture check failed.\n");
+		printf("Error: Texture check failed.\n");
 		free_all(main);
 		return (1);
 	}

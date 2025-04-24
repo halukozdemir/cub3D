@@ -2,9 +2,9 @@ F 10,20,255
 C 116,250,255
 WE ./textures/WE.xpm
 NO ./textures/NO.xpm
-
+SO ./textures/SO.xpm
 EA ./textures/EA.xpm
-
+SO ./textures/EA.xpm
 
 111111
 100001
