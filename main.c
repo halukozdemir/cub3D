@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 17:42:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:46:09 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:59:49 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ static int	handle_errors(t_main *main, int exit_code)
 	return (exit_code);
 }
 
-static int	initialize_and_check(t_main **main, char *map_file)
+static int	initialize_and_check(t_main **main)
 {
-	*main = init_all(map_file);
+	*main = init_all();
 	if (!*main)
 	{
 		ft_putstr_fd("Initialization failed\n", 1);
@@ -92,7 +92,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	av_check(argv[1]);
-	exit_code = initialize_and_check(&main, argv[1]);
+	exit_code = initialize_and_check(&main);
 	if (exit_code)
 		return (handle_errors(main, exit_code));
 	fd = handle_textures(main, argv[1]);
