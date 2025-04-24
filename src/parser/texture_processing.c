@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 19:27:10 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:21:40 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:45:02 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	has_non_space_or_newline(const char *str)
 static int	process_line(t_textures *textures, char *line)
 {
 	t_line_parse	p;
+	int				result;
 
 	p = (t_line_parse){textures, line, 0};
 	skip_whitespaces(p.line, &p.index);
@@ -40,7 +41,8 @@ static int	process_line(t_textures *textures, char *line)
 	return (0);
 }
 
-int	fill_textures_struct(t_textures *textures, const char *file_name)
+int	fill_textures_struct(t_textures *textures, const char *file_name,
+		t_main *main)
 {
 	int		fd;
 	char	*line;

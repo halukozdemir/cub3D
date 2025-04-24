@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 19:57:12 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:20:33 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:57:36 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,4 @@ int	count_char(const char *str, char c)
 		str++;
 	}
 	return (count);
-}
-
-void	av_check(char *av)
-{
-	int	fd;
-	int	len;
-
-	fd = open(av, O_RDWR);
-	if (fd == -1)
-	{
-		close(fd);
-		ft_putstr_fd("Error\nFile can not open.\n", 1);
-		exit(1);
-	}
-	close(fd);
-	len = ft_strlen(av);
-	if (av[len - 1] != 'b' || av[len - 2] != 'u' || av
-		[len - 3] != 'c' || av[len - 4] != '.')
-	{
-		ft_putstr_fd("Error\nThe file is not '.cub' extension.\n", 1);
-		exit(1);
-	}
-	special_cont(av);
-	check_textures_in_map(av);
 }

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ray.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 16:04:16 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 16:04:16 by halozdem         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../lib/cub3d.h"
 
 void	draw_background(t_main *main)
@@ -31,11 +19,11 @@ void	draw_background(t_main *main)
 			pixel_index = (y * main->mlx.image.size_line + x
 					* (main->mlx.image.bpp / 8)) / 4;
 			if (y < HEIGHT / 2)
-				((unsigned int *)main->mlx.image.addr)
-				[pixel_index] = ceiling_color;
+				((unsigned int *)main->mlx.image.addr)[pixel_index]
+					= ceiling_color;
 			else
-				((unsigned int *)main->mlx.image.addr)
-				[pixel_index] = floor_color;
+				((unsigned int *)main->mlx.image.addr)[pixel_index]
+					= floor_color;
 		}
 	}
 }
@@ -68,8 +56,7 @@ void	set_ray_step(t_ray *ray, t_positon *player_pos)
 	else
 	{
 		ray->step_x = 1;
-		ray->sidedist_x = (ray->map_x + 1.0 - player_pos->x)
-			* ray->deltadist_x;
+		ray->sidedist_x = (ray->map_x + 1.0 - player_pos->x) * ray->deltadist_x;
 	}
 	if (ray->raydir_y < 0)
 	{
@@ -79,8 +66,7 @@ void	set_ray_step(t_ray *ray, t_positon *player_pos)
 	else
 	{
 		ray->step_y = 1;
-		ray->sidedist_y = (ray->map_y + 1.0 - player_pos->y)
-			* ray->deltadist_y;
+		ray->sidedist_y = (ray->map_y + 1.0 - player_pos->y) * ray->deltadist_y;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 19:27:43 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:21:19 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:27:46 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	init_map_borders(t_map *map)
 char	init_map(t_map *map)
 {
 	int	i;
+	int	j;
 
 	map->map = ft_calloc((map->map_max_y + 3), sizeof(char *));
 	if (!map->map)

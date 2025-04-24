@@ -6,19 +6,20 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:19:28 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:53:11 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
 
-static char	find_valid_map_start(t_main *main, int *fd, char **line,
-		bool *error)
+static char	process_initial_lines(t_main *main, int *fd, bool *error,
+		char **line)
 {
 	char	*str;
 
-	*error = false;
 	*line = get_next_line(*fd);
+	if (!*line)
+		return (EXIT_SUCCESS);
 	str = ft_strtrim(*line, " ");
 	while (*line && *str == '\n')
 	{
@@ -27,7 +28,8 @@ static char	find_valid_map_start(t_main *main, int *fd, char **line,
 			return (free(*line), EXIT_FAILURE);
 		free(*line);
 		*line = get_next_line(*fd);
-		str = ft_strtrim(*line, " ");
+		if (*line)
+			str = ft_strtrim(*line, " ");
 	}
 	free(str);
 	if (*error)
@@ -35,15 +37,16 @@ static char	find_valid_map_start(t_main *main, int *fd, char **line,
 	return (EXIT_SUCCESS);
 }
 
-char	get_map_size(t_main *main, int *fd)
+char	get_map_size(t_main *main, int *fd, const char *file_name)
 {
 	char	*line;
 	int		i;
 	bool	error;
 
-	if (find_valid_map_start(main, fd, &line, &error) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	i = 1;
+	error = false;
+	if (process_initial_lines(main, fd, &error, &line) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	while (line)
 	{
 		process_map_line(main, line, &i);

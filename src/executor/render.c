@@ -1,22 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 16:02:15 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 16:02:15 by halozdem         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../lib/cub3d.h"
 
 void	move_forward(t_main *main, const double delta_time)
 {
-	double	speed;
-	int		new_y;
-	int		new_x;
+	double			speed;
+	int				new_y;
+	int				new_x;
 
 	speed = delta_time * MOVE_SPEED;
 	new_y = (int)(main->player_pos->y + (main->player_pos->diry * speed));
@@ -31,9 +19,9 @@ void	move_forward(t_main *main, const double delta_time)
 
 void	move_backward(t_main *main, const double delta_time)
 {
-	double	speed;
-	int		new_y;
-	int		new_x;
+	double			speed;
+	int				new_y;
+	int				new_x;
 
 	speed = delta_time * MOVE_SPEED;
 	new_y = (int)(main->player_pos->y - (main->player_pos->diry * speed));
@@ -48,9 +36,9 @@ void	move_backward(t_main *main, const double delta_time)
 
 void	move_right(t_main *main, const double delta_time)
 {
-	double	speed;
-	int		new_y;
-	int		new_x;
+	double			speed;
+	int				new_y;
+	int				new_x;
 
 	speed = delta_time * MOVE_SPEED;
 	new_y = (int)(main->player_pos->y);
@@ -65,9 +53,9 @@ void	move_right(t_main *main, const double delta_time)
 
 void	move_left(t_main *main, const double delta_time)
 {
-	double	speed;
-	int		new_y;
-	int		new_x;
+	double			speed;
+	int				new_y;
+	int				new_x;
 
 	speed = delta_time * MOVE_SPEED;
 	new_y = (int)(main->player_pos->y);
@@ -82,10 +70,10 @@ void	move_left(t_main *main, const double delta_time)
 
 int	render(void *param)
 {
-	t_main				*main;
-	unsigned long long	current;
-	double				delta_time;
-	double				angle;
+	t_main					*main;
+	unsigned long long		current;
+	double					delta_time;
+	double					angle;
 
 	main = param;
 	current = get_timestamp();
@@ -96,7 +84,7 @@ int	render(void *param)
 	if (main->keys.esc_pressed)
 	{
 		free_all(main);
-		exit(0);
+		exit(1);
 	}
 	display(main);
 	return (1);
