@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:09 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:20:08 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:13:18 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	init_keys(t_keys *keys)
 	keys->esc_pressed = 0;
 }
 
-t_main	*init_all()
+t_main	*init_all(void)
 {
 	t_main	*main;
 

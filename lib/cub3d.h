@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 18:27:00 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:09:26 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,10 +185,11 @@ int						fill_map_struct(t_main *main, int *fd,
 							const char *file_name);
 int						init_mlx(t_main *main, t_mlx *mlx);
 t_textures				*init_textures_struct(void);
-t_main					*init_all();
+t_main					*init_all(void);
 t_map					*init_map_struct(void);
-int ft_isspace(int c);
-int	init_texture(t_mlx *mlx, void **img, char *path, t_image *texture);
+int						ft_isspace(int c);
+int						init_texture(t_mlx *mlx, void **img, char *path,
+							t_image *texture);
 char					ft_find_in_str(char *line, char *str);
 char					skip_whitespaces(char *str, int *i);
 char					check_textures_done(t_textures *textures);
