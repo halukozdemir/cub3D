@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:09 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 20:46:34 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:00:46 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	init_keys(t_keys *keys)
 	keys->esc_pressed = 0;
 }
 
-t_main	*init_all(char *map_name)
+static t_main	*init_player_and_keys(void)
 {
 	t_main	*main;
 
@@ -81,6 +81,16 @@ t_main	*init_all(char *map_name)
 	main->player_pos->y = -1;
 	main->player_pos->count = 0;
 	init_keys(&main->keys);
+	return (main);
+}
+
+t_main	*init_all(void)
+{
+	t_main	*main;
+
+	main = init_player_and_keys();
+	if (!main)
+		return (NULL);
 	main->textures = init_textures_struct();
 	if (!main->textures)
 		return (free(main->player_pos), free(main), NULL);
@@ -91,7 +101,8 @@ t_main	*init_all(char *map_name)
 		free(main->textures->keys);
 		free(main->textures);
 		free(main->player_pos);
-		return (free(main), NULL);
+		free(main);
+		return (NULL);
 	}
 	return (main);
 }

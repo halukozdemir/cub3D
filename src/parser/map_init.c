@@ -46,7 +46,6 @@ static void	init_map_borders(t_map *map)
 char	init_map(t_map *map)
 {
 	int	i;
-	int	j;
 
 	map->map = ft_calloc((map->map_max_y + 3), sizeof(char *));
 	if (!map->map)

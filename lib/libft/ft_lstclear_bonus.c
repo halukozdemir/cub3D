@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 12:40:40 by gbodur            #+#    #+#             */
-/*   Updated: 2024/10/19 12:40:50 by gbodur           ###   ########.fr       */
+/*   Created: 2025/04/25 15:07:45 by beyildiz          #+#    #+#             */
+/*   Updated: 2025/04/25 15:07:47 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

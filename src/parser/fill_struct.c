@@ -3,49 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   fill_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:25:45 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 20:53:11 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:59:35 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
 
-static char	process_initial_lines(t_main *main, int *fd, bool *error,
-		char **line)
+char	process_initial_lines(t_main *main, int *fd, char **line)
 {
+	bool	error;
 	char	*str;
 
+	error = false;
 	*line = get_next_line(*fd);
-	if (!*line)
-		return (EXIT_SUCCESS);
 	str = ft_strtrim(*line, " ");
 	while (*line && *str == '\n')
 	{
 		free(str);
-		if (check_map_error(main, *line, error))
+		if (check_map_error(main, *line, &error))
 			return (free(*line), EXIT_FAILURE);
 		free(*line);
 		*line = get_next_line(*fd);
-		if (*line)
-			str = ft_strtrim(*line, " ");
+		str = ft_strtrim(*line, " ");
 	}
 	free(str);
-	if (*error)
+	if (error)
 		return (free(*line), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-char	get_map_size(t_main *main, int *fd, const char *file_name)
+char	get_map_size(t_main *main, int *fd)
 {
 	char	*line;
 	int		i;
-	bool	error;
+	char	result;
 
 	i = 1;
-	error = false;
-	if (process_initial_lines(main, fd, &error, &line) == EXIT_FAILURE)
+	result = process_initial_lines(main, fd, &line);
+	if (result == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	while (line)
 	{
@@ -54,7 +52,17 @@ char	get_map_size(t_main *main, int *fd, const char *file_name)
 		line = get_next_line(*fd);
 	}
 	main->map->map_max_y = i;
-	close(*fd);
+	return ((close(*fd)), EXIT_SUCCESS);
+}
+
+int	init_and_skip_headers(t_main *main, int *fd, const char *file_name,
+	char **line)
+{
+	*fd = open(file_name, O_RDWR);
+	if (*fd < 0 || init_map(main->map) == EXIT_FAILURE)
+		return (close(*fd), EXIT_FAILURE);
+	*line = get_next_line(*fd);
+	skip_identifiers(*fd, line);
 	return (EXIT_SUCCESS);
 }
 
@@ -63,12 +71,11 @@ int	fill_map_struct(t_main *main, int *fd, const char *file_name)
 	char	*line;
 	int		i;
 	int		j;
+	int		result;
 
-	*fd = open(file_name, O_RDWR);
-	if (*fd < 0 || init_map(main->map) == EXIT_FAILURE)
-		return (close(*fd), EXIT_FAILURE);
-	line = get_next_line(*fd);
-	skip_identifiers(*fd, &line);
+	result = init_and_skip_headers(main, fd, file_name, &line);
+	if (result == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	i = 0;
 	while (line && i < main->map->map_max_y)
 	{

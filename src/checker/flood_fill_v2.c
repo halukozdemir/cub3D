@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker_2.c                                    :+:      :+:    :+:   */
+/*   flood_fill_v2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:49:18 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/16 15:51:27 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:53:53 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ static void	f_fill_2(t_map *map, int y, int x)
 
 static void	check_invalid_map(t_main *main, int y, int x)
 {
-	if (main->map->copy_map[y][x] == '0'
+	if ((main->map->copy_map[y][x] == '0'
+		|| main->map->copy_map[y][x] == 'N'
+		|| main->map->copy_map[y][x] == 'S'
+		|| main->map->copy_map[y][x] == 'W'
+		|| main->map->copy_map[y][x] == 'E')
 		&& (main->map->copy_map[y - 1][x] == 'B'
 		|| main->map->copy_map[y + 1][x] == 'B'
 		|| main->map->copy_map[y][x + 1] == 'B'

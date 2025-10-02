@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_processing.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 19:27:10 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 20:45:02 by halozdem         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:46:46 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,13 @@ int	has_non_space_or_newline(const char *str)
 static int	process_line(t_textures *textures, char *line)
 {
 	t_line_parse	p;
-	int				result;
 
 	p = (t_line_parse){textures, line, 0};
 	skip_whitespaces(p.line, &p.index);
 	if (process_texture_lines(&p))
 		return (1);
-	if (!ft_find_in_str(p.line, p.textures->keys) && !ft_strchr(p.line
-			+ p.index, '\n'))
+	if (!ft_find_in_str(p.line, p.textures->keys)
+		&& !ft_strchr(p.line + p.index, '\n'))
 	{
 		if (check_textures_done(p.textures))
 			return (1);
@@ -41,8 +40,7 @@ static int	process_line(t_textures *textures, char *line)
 	return (0);
 }
 
-int	fill_textures_struct(t_textures *textures, const char *file_name,
-		t_main *main)
+int	fill_textures_struct(t_textures *textures, const char *file_name)
 {
 	int		fd;
 	char	*line;

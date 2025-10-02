@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc -g
-CFLAGS = -I./lib/libft -I/usr/include -I./lib/minilibx -I2 -I./gnl #-fsanitize=address -g
+CFLAGS = -I./lib/libft -I/usr/include -I./lib/minilibx -I2 -I./gnl -Wall -Werror -Wextra
 MLXFLAGS = -L./lib/minilibx -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 LIBFT_DIR = ./lib/libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -13,7 +13,9 @@ SRCS = main.c src/parser/fill_struct.c src/parser/init.c src/utils/parser_utils.
 	src/parser/texture_processing.c src/parser/player_dir.c src/executor/render.c \
 	src/executor/render_rotate.c src/executor/display.c src/executor/ray.c \
 	src/executor/init_mlx.c lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c \
-	src/checker/special_cont.c src/checker/special_texture_cont.c \
+	src/checker/special_cont.c src/checker/special_texture_cont.c  src/checker/special_cont_3.c \
+	src/checker/special_cont_2.c src/checker/special_cont_4.c src/cleanup/free_textures.c \
+	src/executor/init_mlx_2.c
 
 OBJS = $(SRCS:.c=.o)
 

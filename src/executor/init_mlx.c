@@ -2,73 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2025/04/24 21:42:32 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 21:42:32 by halozdem         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/25 14:23:26 by beyildiz          #+#    #+#             */
+/*   Updated: 2025/04/25 14:23:26 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/cub3d.h"
-
-static int	init_mlx_window(t_mlx *mlx)
-{
-	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "KANZILETTO CUB3D");
-	if (!mlx->win)
-	{
-		mlx_destroy_display(mlx->mlx);
-		return (1);
-	}
-	return (0);
-}
-
-static int	init_main_image(t_mlx *mlx)
-{
-	mlx->image.img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
-	if (!mlx->image.img)
-	{
-		mlx_clear_window(mlx->mlx, mlx->win);
-		mlx_destroy_display(mlx->mlx);
-		return (1);
-	}
-	mlx->image.addr = mlx_get_data_addr(mlx->image.img, &mlx->image.bpp,
-			&mlx->image.size_line, &mlx->image.endian);
-	if (!mlx->image.addr)
-	{
-		mlx_clear_window(mlx->mlx, mlx->win);
-		mlx_destroy_display(mlx->mlx);
-		return (1);
-	}
-	return (0);
-}
-
-int	init_texture(t_mlx *mlx, void **img, char *path, t_image *texture)
-{
-	*img = mlx_xpm_file_to_image(mlx->mlx, path, &texture->width,
-			&texture->height);
-	if (!*img)
-	{
-		mlx_clear_window(mlx->mlx, mlx->win);
-		mlx_destroy_display(mlx->mlx);
-		return (1);
-	}
-	texture->addr = mlx_get_data_addr(*img, &texture->bpp, &texture->size_line,
-			&texture->endian);
-	return (0);
-}
-
-int	close_window(void *param)
-{
-	t_main		*main;
-	main = param;
-	free_all(main);
-	exit(0);
-	return (0);
-}
 
 static void	setup_hooks(t_mlx *mlx, t_main *main)
 {
@@ -78,12 +20,11 @@ static void	setup_hooks(t_mlx *mlx, t_main *main)
 	mlx_loop_hook(mlx->mlx, render, main);
 }
 
-int	init_mlx(t_main *main, t_mlx *mlx)
+int	init_mlx_window(t_mlx *mlx)
 {
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)
 		return (0);
-
 	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "KANZILETTO CUB3D");
 	if (!mlx->win)
 	{
@@ -91,7 +32,11 @@ int	init_mlx(t_main *main, t_mlx *mlx)
 		mlx->mlx = NULL;
 		return (0);
 	}
+	return (1);
+}
 
+int	init_mlx_image(t_mlx *mlx)
+{
 	mlx->image.img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	if (!mlx->image.img)
 	{
@@ -100,28 +45,36 @@ int	init_mlx(t_main *main, t_mlx *mlx)
 		mlx->mlx = NULL;
 		return (0);
 	}
-
 	mlx->image.addr = mlx_get_data_addr(mlx->image.img, &mlx->image.bpp,
 			&mlx->image.size_line, &mlx->image.endian);
+	return (1);
+}
 
-	// Initialize each texture with proper error handling
-	if (init_texture(mlx, &mlx->we_text.img, main->textures->we, &mlx->we_text)
-		|| init_texture(mlx, &mlx->ea_text.img, main->textures->ea,
-			&mlx->ea_text) || init_texture(mlx, &mlx->so_text.img,
-			main->textures->so, &mlx->so_text) || init_texture(mlx,
-			&mlx->no_text.img, main->textures->no, &mlx->no_text))
+int	init_mlx_textures_and_run(t_main *main, t_mlx *mlx)
+{
+	if (init_texture(mlx, &mlx->we_text.img,
+			main->textures->we, &mlx->we_text)
+		|| init_texture(mlx, &mlx->ea_text.img,
+			main->textures->ea, &mlx->ea_text)
+		|| init_texture(mlx, &mlx->so_text.img,
+			main->textures->so, &mlx->so_text)
+		|| init_texture(mlx, &mlx->no_text.img,
+			main->textures->no, &mlx->no_text))
 	{
-		// Clean up what's been allocated
 		clean_mlx(mlx);
 		return (0);
 	}
-
 	setup_hooks(mlx, main);
-
-	// Start the mlx loop
-	-note that this is a blocking call and won't return (until the window is closed mlx_loop(mlx->mlx));
-
-		// This will only be reached if mlx_loop returns (not normally expected)
-		clean_mlx(mlx);
+	mlx_loop(mlx->mlx);
+	clean_mlx(mlx);
 	return (1);
+}
+
+int	init_mlx(t_main *main, t_mlx *mlx)
+{
+	if (!init_mlx_window(mlx))
+		return (0);
+	if (!init_mlx_image(mlx))
+		return (0);
+	return (init_mlx_textures_and_run(main, mlx));
 }

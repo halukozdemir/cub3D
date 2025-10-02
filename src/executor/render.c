@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 21:41:33 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 21:41:33 by halozdem         ###   ########.fr       */
+/*   Created: 2025/04/25 14:19:57 by beyildiz          #+#    #+#             */
+/*   Updated: 2025/04/25 14:19:57 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	render(void *param)
 	if (main->keys.esc_pressed)
 	{
 		free_all(main);
-		exit(1);
+		exit(0);
 	}
 	display(main);
 	return (1);

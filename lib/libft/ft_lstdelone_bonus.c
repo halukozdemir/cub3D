@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 12:41:10 by gbodur            #+#    #+#             */
-/*   Updated: 2024/10/19 12:41:19 by gbodur           ###   ########.fr       */
+/*   Created: 2025/04/25 15:07:50 by beyildiz          #+#    #+#             */
+/*   Updated: 2025/04/25 15:07:52 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:14 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 12:36:04 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/25 16:48:21 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,14 +159,28 @@ typedef struct s_main
 	int					error;
 }						t_main;
 
-void					check_textures_in_map(const char *map_file) ;
+int						init_texture(t_mlx *mlx, void **img, char *path,
+							t_image *texture);
+void					validate_line(char *line, int *map_section_started,
+							int *texture_ended);
+int						is_map_line(char *line);
+void					validate_color(char *buffer, int i, int fd);
+int						is_texture_line(char *line);
+int						check_map_section_start(char *buffer, int i);
+void					validate_map_character(char character,
+							int map_section_started, int fd);
+int						is_empty_line(char *line);
+void					handle_texture_line(char *line, char *buffer,
+							int line_start, int fd);
+void					print_error_and_exit(char *message, int fd);
+void					check_textures_in_map(const char *map_file);
 void					special_cont(const char *file_name);
 int						close_window(void *param);
 char					init_map(t_map *map);
 t_image					*get_texture(t_mlx *mlx, t_ray *ray);
 int						rgbtouint(char **colors);
 int						key_release(int keycode, void *main);
-char					get_map_size(t_main *main, int *fd, const char *file_name);
+char					get_map_size(t_main *main, int *fd);
 void					perform_dda(t_ray *ray, char **map);
 void					set_ray_step(t_ray *ray, t_positon *player_pos);
 void					init_ray(t_ray *ray, t_positon *player_pos, int x);
@@ -185,7 +199,7 @@ int						fill_map_struct(t_main *main, int *fd,
 							const char *file_name);
 int						init_mlx(t_main *main, t_mlx *mlx);
 t_textures				*init_textures_struct(void);
-t_main					*init_all(char *map_name);
+t_main					*init_all(void);
 t_map					*init_map_struct(void);
 char					ft_find_in_str(char *line, char *str);
 char					skip_whitespaces(char *str, int *i);
@@ -220,8 +234,11 @@ void					set_south_direction(float dir[2], float plane[2]);
 void					set_east_direction(float dir[2], float plane[2]);
 void					set_west_direction(float dir[2], float plane[2]);
 int						process_texture_lines(t_line_parse *p);
-void					if_condition(t_main *main, const double angle, const double delta_time);
-int						fill_textures_struct(t_textures *textures, const char *file_name, t_main *main);
+void					if_condition(t_main *main, const double angle,
+							const double delta_time);
+int						fill_textures_struct(t_textures *textures,
+							const char *file_name);
 void					clean_mlx(t_mlx *mlx);
+int						ft_isspace(char c);
 
 #endif

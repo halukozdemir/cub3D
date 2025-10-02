@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_rotate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyildiz <beyildiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 21:41:11 by halozdem          #+#    #+#             */
-/*   Updated: 2025/04/24 21:41:11 by halozdem         ###   ########.fr       */
+/*   Created: 2025/04/25 14:15:51 by beyildiz          #+#    #+#             */
+/*   Updated: 2025/04/25 14:15:51 by beyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	rotate_right(t_main *main, const double angle)
 
 	olddirx = main->player_pos->dirx;
 	oldplanex = main->player_pos->planex;
-	main->player_pos->dirx = olddirx * cos(angle) - main->player_pos->diry
-		* sin(angle);
-	main->player_pos->diry = olddirx * sin(angle) + main->player_pos->diry
-		* cos(angle);
-	main->player_pos->planex = oldplanex * cos(angle) - main->player_pos->planey
-		* sin(angle);
-	main->player_pos->planey = oldplanex * sin(angle) + main->player_pos->planey
-		* cos(angle);
+	main->player_pos->dirx = olddirx * cos(angle)
+		- main->player_pos->diry * sin(angle);
+	main->player_pos->diry = olddirx * sin(angle)
+		+ main->player_pos->diry * cos(angle);
+	main->player_pos->planex = oldplanex * cos(angle)
+		- main->player_pos->planey * sin(angle);
+	main->player_pos->planey = oldplanex * sin(angle)
+		+ main->player_pos->planey * cos(angle);
 }
 
 void	rotate_left(t_main *main, const double angle)
@@ -54,10 +54,10 @@ void	rotate_left(t_main *main, const double angle)
 
 	olddirx = main->player_pos->dirx;
 	oldplanex = main->player_pos->planex;
-	main->player_pos->dirx = olddirx * cos(-angle) - main->player_pos->diry
-		* sin(-angle);
-	main->player_pos->diry = olddirx * sin(-angle) + main->player_pos->diry
-		* cos(-angle);
+	main->player_pos->dirx = olddirx * cos(-angle)
+		- main->player_pos->diry * sin(-angle);
+	main->player_pos->diry = olddirx * sin(-angle)
+		+ main->player_pos->diry * cos(-angle);
 	main->player_pos->planex = oldplanex * cos(-angle)
 		- main->player_pos->planey * sin(-angle);
 	main->player_pos->planey = oldplanex * sin(-angle)
