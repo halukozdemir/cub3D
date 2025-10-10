@@ -175,7 +175,8 @@ Bu proje Ecole42 eğitim programı kapsamında geliştirilmiştir.
 
 **Haluk Özdemir**  
 42 Istanbul - Graphics Programming
-**Betül Yıldız**
+
+**Betül Yıldız**  
 42 Istanbul - Graphics Programming
 
 ---
@@ -361,7 +362,8 @@ This project was developed within the scope of the Ecole42 education program.
 
 **Haluk Özdemir**  
 42 Istanbul - Graphics Programming
-**Betül Yıldız**
+
+**Betül Yıldız**  
 42 Istanbul - Graphics Programming
 
 ---
