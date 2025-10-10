@@ -114,14 +114,13 @@ C 225,30,0                 # Tavan rengi (RGB)
 ## 🔍 Test Senaryoları
 
 ```bash
-# Temel test
-./cub3D maps/basic.cub
+# Küçük harita testi
+./cub3D maps/map.cub
 
 # Büyük harita testi
-./cub3D maps/large.cub
+./cub3D maps/map2.cub
 
-# Texture testi
-./cub3D maps/texture_test.cub
+
 ```
 
 ## 📊 Performans
@@ -301,14 +300,12 @@ C 225,30,0                 # Ceiling color (RGB)
 ## 🔍 Test Scenarios
 
 ```bash
-# Basic test
-./cub3D maps/basic.cub
+# Small map test
+./cub3D maps/map.cub
 
 # Large map test
-./cub3D maps/large.cub
+./cub3D maps/map2.cub
 
-# Texture test
-./cub3D maps/texture_test.cub
 ```
 
 ## 📊 Performance
