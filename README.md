@@ -120,7 +120,6 @@ C 225,30,0                 # Tavan rengi (RGB)
 # Büyük harita testi
 ./cub3D maps/map2.cub
 
-
 ```
 
 ## 📊 Performans
